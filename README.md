@@ -1,2 +1,2 @@
-# Hype Bot Telegram
-We're gonna ruin out telegram group chat with this thing
+# DnD Bot Telegram
+We're gonna level up our telegram group chat with this thing.
