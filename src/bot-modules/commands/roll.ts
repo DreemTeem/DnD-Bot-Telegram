@@ -15,9 +15,6 @@ export class RollCommands {
       const verbose: boolean = msg.text.indexOf(" -v") > 0;
       const diceMatch: string[] = msg.text.match(/([1-9][0-9]*)d([1-9][0-9]*)/);
 
-      console.log(msg);
-      console.log(msg.text.match(/([1-9][0-9]*)d([1-9][0-9]*)/));
-
       if (!diceMatch) {
         this.HBot.sendMessage(msg.chat.id, this.getRollMessage(6, 1, verbose));
       } else {
