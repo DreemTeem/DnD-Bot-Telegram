@@ -16,8 +16,6 @@ export class DnDCommands {
       if (commandArray.length === 1) {
         this.getGenericResponse(msg.chat.id);
       } else {
-        // TODO: Add context specific search result narrowing (i.e. "skill")
-        // http://www.d20srd.org/indexes/skills.htm ?
         switch (commandArray[1]) {
           default:
             this.getGenericSearch(msg.chat.id, commandArray.splice(1, commandArray.length).join(" "));
@@ -31,20 +29,20 @@ export class DnDCommands {
     const uriRoot: string = "http://www.dandwiki.com";
     const uriSearch: string = encodeURIComponent(searchQuery);
     this.request.get(uriRoot + "/wiki/Special:Search?search=" + uriSearch + "&ns100=1&fulltext=Search+the+SRD", (error: any, response: any, body: any) => {
-        if (response) {
-          const $: any = this.cheerio.load(response.body);
-          const mainResults: any = $(".mw-search-results").eq(0).find("li a");
-          let message: string = "<b>Basic DnD Search Results</b>\n==============================\n";
-          mainResults.each((index: number, element: any) => {
-            message += "  <a href=\"" + uriRoot + element.attribs.href + "\">" + element.attribs.title + "</a>\n";
-          });
-          this.DnDBot.sendMessage(messageId, message, { parse_mode: "HTML", disable_web_page_preview: true });
-        } else if (error) {
-          this.DnDBot.sendMessage(messageId, "Sorry, no results were returned.", { parse_mode: "HTML", disable_web_page_preview: true });
-        } else {
-          this.DnDBot.sendMessage(messageId, "Sorry, an unknown error has occured.", { parse_mode: "HTML", disable_web_page_preview: true });
-        }
-      });
+      if (response) {
+        const $: any = this.cheerio.load(response.body);
+        const mainResults: any = $(".mw-search-results").eq(0).find("li a");
+        let message: string = "<b>Basic DnD Search Results</b>\n==============================\n";
+        mainResults.each((index: number, element: any) => {
+          message += "  <a href=\"" + uriRoot + element.attribs.href + "\">" + element.attribs.title + "</a>\n";
+        });
+        this.DnDBot.sendMessage(messageId, message, { parse_mode: "HTML", disable_web_page_preview: true });
+      } else if (error) {
+        this.DnDBot.sendMessage(messageId, "Sorry, no results were returned.", { parse_mode: "HTML", disable_web_page_preview: true });
+      } else {
+        this.DnDBot.sendMessage(messageId, "Sorry, an unknown error has occured.", { parse_mode: "HTML", disable_web_page_preview: true });
+      }
+    });
   }
 
   private getGenericResponse(messageId: number): void {

@@ -3,6 +3,7 @@ import TelegramBot = require("node-telegram-bot-api");
 import { TextResponses } from "./bot-modules/text-responses/text-responses";
 import { RollCommands } from "./bot-modules/commands/roll";
 import { DnDCommands } from "./bot-modules/commands/dnd";
+import { GenerateCommands } from "./bot-modules/commands/generate";
 
 const token = "331467600:AAFUKz7Nl8ncw15jtYxWLBzv9CxV65q1Zyk";
 const MyTelegramBot = new TelegramBot(token, { polling: true });
@@ -10,6 +11,7 @@ const MyTelegramBot = new TelegramBot(token, { polling: true });
 new TextResponses(MyTelegramBot);
 new RollCommands(MyTelegramBot);
 new DnDCommands(MyTelegramBot);
+new GenerateCommands(MyTelegramBot);
 
 // Test Echo Commands
 MyTelegramBot.onText(/\/echo (.+)/, (msg: any, match: any): void => {
