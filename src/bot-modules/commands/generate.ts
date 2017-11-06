@@ -4,6 +4,7 @@ export class GenerateCommands {
   private DnDBot: TelegramBot;
   private request = require("request");
   private cheerio = require("cheerio");
+  private MAP_SEED_LENGTH: number = 6;
 
   constructor(botReference: TelegramBot) {
     this.DnDBot = botReference;
@@ -55,7 +56,6 @@ export class GenerateCommands {
       for (let i: number = 0; i < 7; i++) {
         for (let j: number = 0; j < 5; j++) {
           const diceRoll = this.getDSix();
-          console.log(diceRoll);
         }
       }
     } else {
@@ -68,19 +68,29 @@ export class GenerateCommands {
   }
 
   private getMap(messageId: number): void {
-    this.request.get("http://www.gozzys.com/dungeon-maps/makerr?seed=rbz1r1&mapsize=2&density=2&background=99&tileset=1&dl=1", (error: any, response: any, body: any) => {
-      if (response) {
-        const $: any = this.cheerio.load(response.body);
-        const mainResults: any = $("body");
-        console.log(mainResults.html());
-        const message: string = "<b>Generating Map</b>\n==============================\n";
-        this.DnDBot.sendMessage(messageId, message, { parse_mode: "HTML", disable_web_page_preview: true });
-      } else if (error) {
-        this.DnDBot.sendMessage(messageId, "Sorry, no results were returned.", { parse_mode: "HTML", disable_web_page_preview: true });
-      } else {
-        this.DnDBot.sendMessage(messageId, "Sorry, an unknown error has occured.", { parse_mode: "HTML", disable_web_page_preview: true });
-      }
-    });
+    const mapSeed = this.getMapSeed();
+    this.DnDBot.sendPhoto(messageId, "http://www.gozzys.com/dungeon-maps/makerr?seed=" + mapSeed + "&mapsize=2&density=2&background=99&tileset=1&dl=1");
+  }
+
+  private getMapSeed(): string {
+
+    const alpha: string[] = [
+      "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+      "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+      "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+      "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    ];
+
+    const num: string[] = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ];
+
+    const alphaNum = alpha.concat(num);
+
+    const seed: string[] = [];
+    for (let i: number = 0 ; i < this.MAP_SEED_LENGTH; i++) {
+      seed.push(alphaNum[Math.floor(Math.random() * alphaNum.length)]);
+    }
+
+    return seed.join("");
   }
 
   private getMissingCommandResponse(messageId: number, badCommand: string): void {
