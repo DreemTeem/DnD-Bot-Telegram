@@ -1,0 +1,2 @@
+roll - Roll a set of user-defined dice.
+generate - Base command for a series of DnD generators such as characters or maps.
