@@ -30,8 +30,9 @@ export class HelpCommands {
   }
 
   private setHelpCommand(): void {
-    this.DnDBot.onText(/^\/(h)|(help)/i, (msg: any, match: any): void => {
+    this.DnDBot.onText(/^\/(h)|^\/(help)/i, (msg: any, match: any): void => {
       const commandArray: string[] = msg.text.split(" ");
+      // TODO: Is this necessary anymore? Run tests to see if the updated REGEX covered the if statement
       if (commandArray[0] === "/h" || commandArray[0] === "/help") {
         if (commandArray.length === 1) {
           this.listAllDnDCommands(msg.chat.id);
