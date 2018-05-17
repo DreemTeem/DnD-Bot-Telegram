@@ -1,9 +1,23 @@
 import TelegramBot = require("node-telegram-bot-api");
 
+export class GeneratorCommandList {
+  public static COMMANDS: any = {
+    character: {
+      keys: ["c", "character"],
+      description: "The character generator is used to generate the basic starting stats for a character: Strength, Inteligence, Charisma, Fortitude, Dexterity, and Wisdom."
+    },
+    map: {
+      keys: ["m", "map"],
+      description: "The map generator allows the random generation of a dungeon map floor."
+    }
+  };
+}
+
 export class GenerateCommands {
   private DnDBot: TelegramBot;
   private request = require("request");
   private cheerio = require("cheerio");
+
   private MAP_SEED_LENGTH: number = 6;
 
   constructor(botReference: TelegramBot) {
@@ -23,18 +37,12 @@ export class GenerateCommands {
     if (commandArray.length === 1) {
       this.getGenericResponse(msg.chat.id);
     } else {
-      switch (commandArray[1]) {
-        case "c":
-        case "character":
-          this.getCharacterStats(msg.chat.id, verbose);
-          break;
-        case "m":
-        case "map":
-          this.getMap(msg.chat.id);
-          break;
-        default:
-          this.getMissingCommandResponse(msg.chat.id, commandArray.splice(1, commandArray.length).join(" "));
-          break;
+      if (GeneratorCommandList.COMMANDS.character.keys.indexOf(commandArray[1]) >= 0) {
+        this.getCharacterStats(msg.chat.id, verbose);
+      } else if (GeneratorCommandList.COMMANDS.map.keys.indexOf(commandArray[1]) >= 0) {
+        this.getMap(msg.chat.id);
+      } else {
+        this.getMissingCommandResponse(msg.chat.id, commandArray.splice(1, commandArray.length).join(" "));
       }
     }
   }
@@ -50,7 +58,7 @@ export class GenerateCommands {
     }
     return result;
   }
-
+  // TODO - Add verbose functionality like the roll command
   private getCharacterStats(messageId: number, verbose: boolean = false): void {
     if (verbose) {
       for (let i: number = 0; i < 7; i++) {
@@ -81,12 +89,12 @@ export class GenerateCommands {
       "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
     ];
 
-    const num: string[] = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ];
+    const num: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
     const alphaNum = alpha.concat(num);
 
     const seed: string[] = [];
-    for (let i: number = 0 ; i < this.MAP_SEED_LENGTH; i++) {
+    for (let i: number = 0; i < this.MAP_SEED_LENGTH; i++) {
       seed.push(alphaNum[Math.floor(Math.random() * alphaNum.length)]);
     }
 
@@ -98,6 +106,6 @@ export class GenerateCommands {
   }
 
   private getGenericResponse(messageId: number): void {
-    this.DnDBot.sendMessage(messageId, "Hello! Try searching with parameters after this command. :)", { parse_mode: "HTML", disable_web_page_preview: true });
+    this.DnDBot.sendMessage(messageId, "Hello! Try using a sub-command with \"generate\". Use \"\/generate help to see a full list of sub generator commands. :)", { parse_mode: "HTML", disable_web_page_preview: true });
   }
 }
