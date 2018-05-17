@@ -16,7 +16,7 @@
   "scripts": {
     "clean": "rimraf lib",
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
-    "build": "npm run clean && npm run lint && npm run custom-types-install && echo Using TypeScript && tsc --version && tsc --pretty",
+    "build": "npm run clean && npm run lint && echo Using TypeScript && tsc --version && tsc --pretty",
     "test": "npm run build && mocha --compilers ts:ts-node/register --recursive 'test/**/*-spec.ts'",
     "coverage": "nyc --include='src/**/*.ts' --reporter=text --reporter=html --reporter=lcov mocha --compilers ts:ts-node/register --recursive 'test/**/*.test.ts'",
     "watch": "npm run build -- --watch",
@@ -26,22 +26,23 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.1",
-    "node-telegram-bot-api": "^0.27.1",
+    "node-telegram-bot-api": "^0.30.0",
     "request": "^2.81.0",
-    "tslint": "^5.3.2"
+    "tslint": "^5.9.0"
   },
   "devDependencies": {
     "@types/chai": "^3.0.0",
     "@types/mocha": "^2.0.0",
     "@types/node": "^7.0.0",
+    "@types/node-telegram-bot-api": "^0.28.3",
     "chai": "^3.0.0",
+    "coveralls": "^2.0.0",
     "mocha": "^3.0.0",
     "nyc": "^10.0.0",
     "rimraf": "^2.0.0",
-    "ts-node": "^3.0.0",
+    "ts-node": "^5.0.0",
     "tslint": "^5.3.2",
-    "typescript": "^2.0.0",
-    "coveralls": "^2.0.0"
+    "typescript": "^2.8.0"
   },
   "engines": {
     "node": ">=4.0.0"
