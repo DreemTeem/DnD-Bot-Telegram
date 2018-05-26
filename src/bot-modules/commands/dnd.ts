@@ -68,12 +68,17 @@ export class DnDCommands {
       if (response) {
         const $: any = this.cheerio.load(response.body);
         const mainResults: any = $(".mw-search-results").eq(0).find("li a");
-        let message: string = "<b>Basic DnD Search Results</b>\n==============================\n";
+        const messages: string[] = ["<b>Basic DnD Search Results</b>\n==============================\n"];
         // TODO: Add cases to provide better message when no results match searchQuery.
         mainResults.each((index: number, element: any) => {
-          message += "  <a href=\"" + uriRoot + element.attribs.href + "\">" + element.attribs.title + "</a>\n";
+          messages.push("  <a href=\"" + uriRoot + element.attribs.href + "\">" + element.attribs.title + "</a>\n");
         });
-        this.DnDBot.sendMessage(messageId, message, { parse_mode: "HTML", disable_web_page_preview: true });
+        // No search results found.
+        if (messages.length === 1) {
+          this.getNoResultsResponse(messageId, searchQuery);
+        } else {
+          this.DnDBot.sendMessage(messageId, messages.join(""), { parse_mode: "HTML", disable_web_page_preview: true });
+        }
       } else if (error) {
         this.DnDBot.sendMessage(messageId, "Sorry, no results were returned.", { parse_mode: "HTML", disable_web_page_preview: true });
       } else {
@@ -97,15 +102,20 @@ export class DnDCommands {
       if (response) {
         const $: any = this.cheerio.load(response.body);
         const mainResults: any = $("ul.post-list.jetsContent li a");
-        let message: string = "<b>DnD 5e Spell Search Results</b>\n==============================\n";
+        const messages: string[] = ["<b>DnD 5e Spell Search Results</b>\n==============================\n"];
         // TODO: Add cases to provide better message when no results match searchQuery.
         mainResults.each((index: number, element: any) => {
           const spellName: string = $(element).text();
           if (spellName.toLowerCase().includes(searchQuery.toLowerCase())) {
-            message += "  <a href=\"" + uriRoot + element.attribs.href + "\">" + spellName + "</a>\n";
+            messages.push("  <a href=\"" + uriRoot + element.attribs.href + "\">" + spellName + "</a>\n");
           }
         });
-        this.DnDBot.sendMessage(messageId, message, { parse_mode: "HTML", disable_web_page_preview: true });
+        // No search results found.
+        if (messages.length === 1) {
+          this.getNoResultsResponse(messageId, searchQuery);
+        } else {
+          this.DnDBot.sendMessage(messageId, messages.join(""), { parse_mode: "HTML", disable_web_page_preview: true });
+        }
       } else if (error) {
         this.DnDBot.sendMessage(messageId, "Sorry, no results were returned.", { parse_mode: "HTML", disable_web_page_preview: true });
       } else {
@@ -139,7 +149,12 @@ export class DnDCommands {
             messages.push("  <a href=\"" + uriRoot + firstCell[0].attribs.href + "\">" + spellName + "</a>\n");
           }
         });
-        this.DnDBot.sendMessage(messageId, messages.join(""), { parse_mode: "HTML", disable_web_page_preview: true });
+        // No search results found.
+        if (messages.length === 1) {
+          this.getNoResultsResponse(messageId, searchQuery);
+        } else {
+          this.DnDBot.sendMessage(messageId, messages.join(""), { parse_mode: "HTML", disable_web_page_preview: true });
+        }
       } else if (error) {
         this.DnDBot.sendMessage(messageId, "Sorry, no results were returned.", { parse_mode: "HTML", disable_web_page_preview: true });
       } else {
@@ -155,5 +170,15 @@ export class DnDCommands {
    */
   private getGenericResponse(messageId: number): void {
     this.DnDBot.sendMessage(messageId, "Hello! Try searching with parameters after this command. :)", { parse_mode: "HTML", disable_web_page_preview: true });
+  }
+
+  /**
+   * Helper function to send the user a message letting them
+   * know their search query returned no results.
+   * @param {number} messageId - ID of the Telegram chat where we send our resonse message.
+   * @param {string} messageId - The failed search query.
+   */
+  private getNoResultsResponse(messageId: number, searchQuery: string): void {
+    this.DnDBot.sendMessage(messageId, "No search results found with the query \"" + searchQuery + "\". Please try to refine or change your search.", { parse_mode: "HTML", disable_web_page_preview: true });
   }
 }

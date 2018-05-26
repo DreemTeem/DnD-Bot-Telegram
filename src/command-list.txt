@@ -1,4 +1,5 @@
 dnd - Search using parameters after this command to see DnD rules associated with your criteria.
+spells - Seach the list of DnD spells using parameteres after this command.
 roll - Roll a set of user-defined dice.
 generate - Base command for a series of DnD generators such as characters or maps.
 help - See a list of bot commands. Specify a command to see any sub commands or flags you can use with it.
