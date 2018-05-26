@@ -21,7 +21,7 @@
     "coverage": "nyc --include='src/**/*.ts' --reporter=text --reporter=html --reporter=lcov mocha --compilers ts:ts-node/register --recursive 'test/**/*.test.ts'",
     "watch": "npm run build -- --watch",
     "watch:test": "npm run test -- --watch",
-    "start": "node lib/index.js",
+    "start": "npm run build && node lib/index.js",
     "custom-types-install": "cp -r ./custom-typings/** ./node_modules/@types/"
   },
   "dependencies": {

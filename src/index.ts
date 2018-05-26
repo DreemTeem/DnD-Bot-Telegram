@@ -14,10 +14,3 @@ new RollCommands(MyTelegramBot);
 new DnDCommands(MyTelegramBot);
 new GenerateCommands(MyTelegramBot);
 new HelpCommands(MyTelegramBot);
-
-// Test Echo Commands
-MyTelegramBot.onText(/\/echo (.+)/, (msg: any, match: any): void => {
-  const chatId = msg.chat.id;
-  const resp = match[1]; // the captured "whatever"
-  MyTelegramBot.sendMessage(chatId, resp);
-});
