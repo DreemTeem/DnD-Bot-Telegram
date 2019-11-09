@@ -1,4 +1,4 @@
-import TelegramBot = require("node-telegram-bot-api");
+const Bot = require('node-telegram-bot-api');
 
 export class GeneratorCommandList {
   public static COMMANDS: any = {
@@ -14,13 +14,13 @@ export class GeneratorCommandList {
 }
 
 export class GenerateCommands {
-  private DnDBot: TelegramBot;
+  private DnDBot;
   private request = require("request");
   private cheerio = require("cheerio");
 
   private MAP_SEED_LENGTH: number = 6;
 
-  constructor(botReference: TelegramBot) {
+  constructor(botReference) {
     this.DnDBot = botReference;
     this.setGenerateCommand();
   }

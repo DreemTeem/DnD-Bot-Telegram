@@ -1,11 +1,11 @@
-import TelegramBot = require("node-telegram-bot-api");
+const Bot = require('node-telegram-bot-api');
 
 export class DnDCommands {
-  private DnDBot: TelegramBot;
+  private DnDBot;
   private request = require("request");
   private cheerio = require("cheerio");
 
-  constructor(botReference: TelegramBot) {
+  constructor(botReference) {
     this.DnDBot = botReference;
     this.setDnDCommand();
     this.setSpellCommand();

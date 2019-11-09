@@ -1,5 +1,5 @@
-import TelegramBot = require("node-telegram-bot-api");
-import { GeneratorCommandList } from "./generate";
+const Bot = require('node-telegram-bot-api');
+const GeneratorCommandList = require("./generate");
 
 export class BaseCommandList {
   public static COMMANDS: any = {
@@ -20,11 +20,11 @@ export class BaseCommandList {
 }
 
 export class HelpCommands {
-  private DnDBot: TelegramBot;
+  private DnDBot;
   private request = require("request");
   private cheerio = require("cheerio");
 
-  constructor(botReference: TelegramBot) {
+  constructor(botReference) {
     this.DnDBot = botReference;
     this.setHelpCommand();
   }

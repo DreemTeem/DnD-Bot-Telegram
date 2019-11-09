@@ -1,9 +1,9 @@
-import TelegramBot = require("node-telegram-bot-api");
+const Bot = require('node-telegram-bot-api');
 
 export class RollCommands {
-  private HBot: TelegramBot;
+  private HBot;
 
-  constructor(botReference: TelegramBot) {
+  constructor(botReference) {
     this.HBot = botReference;
     this.setRollCommand();
   }

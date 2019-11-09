@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+    "outDir": "./output"
+    },
+    "inclue": ["./src/*"],
+    "exclude": []
+  }
+  
