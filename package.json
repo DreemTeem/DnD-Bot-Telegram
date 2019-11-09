@@ -7,7 +7,8 @@
     "compile-typescript": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node index.js",
-    "switch_to_dev": "export $(cat .env | xargs) && wget --spider https://api.telegram.org/bot$TOKEN/setWebhook?url= --delete-after && node index.js"
+    "switch_to_dev": "export $(cat .env | xargs) && wget --spider https://api.telegram.org/bot$TOKEN/setWebhook?url= --delete-after && node index.js",
+    "postinstall": " tsc"
   },
   "author": "Volodymyr Lut",
   "license": "ISC",
