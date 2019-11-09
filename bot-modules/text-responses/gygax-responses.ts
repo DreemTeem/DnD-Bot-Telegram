@@ -1,0 +1,22 @@
+export const GygaxResponses: string[] = [
+  "Random chance plays a huge part in everybody's life.",
+  "Games give you a chance to excel, and if you're playing in good company you don't even mind if you lose because you had the enjoyment of the company during the course of the game.",
+  "The secret we should never let the gamemasters know is that they don't need any rules.",
+  "You are not entering this world in the usual manner, for you are setting forth to be a Dungeon Master. Certainly there are stout fighters, mighty magic-users, wily thieves, and courageous clerics who will make their mark in the magical lands of D&D adventure. You however, are above even the greatest of these, for as DM you are to become the Shaper of the Cosmos. It is you who will give form and content to the all the universe. You will breathe life into the stillness, giving meaning and purpose to all the actions which are to follow.",
+  "The worthy GM never purposely kills players' PCs, He presents opportunities for the rash and unthinking players to do that all on their own.",
+  "I would like the world to remember me as the guy who really enjoyed playing games and sharing his knowledge and his fun pastimes with everybody else.",
+  "Send anyone claiming that their RPG activity is an art form my way, and I'll gladly stick a pin in their head and deflate it just to have the satisfaction of the popping sound that makes. \nOne might play a game artfully, but that makes neither the game nor its play art.",
+  "Even the most outspoken of the critics must admit that long before we had print and film media to \"spread the word,\" mankind was engaged in all forms of cruel and despicable behavior. To attribute war, killing, and violence to film, TV, and role-play games is to fly in the face of thousands of years of recorded history.",
+  "Do not be sidetracked. A good referee will have many ways to distract an expedition, many things to draw attention, but ignore them if at all possible.",
+  "Although the masculine form of appellation is typically used when listing the level titles of the various types of characters, these names can easily be changed to the feminine if desired. This is fantasy--what's in a name? In all but a few cases sex makes no difference to ability!",
+  "Somebody said they threw their copy of Dungeons and Dragons into the fire, and it screamed. It's a game! The magic spells in it are as real as the gold. Try retiring on that stuff.",
+  "I wasn't popular in the home office because I wasn't chicken. I'm just a risk taker. I have gut instincts.",
+  "Of course as children, we all, in all cultures and societies, learn behavior from observation, imitation, and encouragement of various kinds. So by the suggestion made, we all 'pretend' most of the time.",
+  "The essence of a role-playing game is that it is a group, cooperative experience.",
+  "There is no winning or losing, but rather the value is in the experience of imagining yourself as a character in whatever genre you're involved in, whether it's a fantasy game, the Wild West, secret agenst or whatever else. You get to sort of vicariously experience those things.",
+  "When AI approximates Machine Intelligence, then many online and computer-run RPGs will move towards actual RPG activity. Nonetheless, that will not replace the experience of 'being there,' any more than seeing a theatrical motion picture can replace the stage play.",
+  "Hello Fry, it's a... *rolls d20* pleasure to meet you.",
+  "The books I write because I want to read them, the games because I want to play them, and stories I tell because I find them exciting personally.",
+  "Pen-and-paper role-playing is live theater and computer games are television. People want the convenience and instant gratification of turning on the TV rather than getting dressed up and going out to see a live play. In the same way, the computer is a more immediately accessible way to play games.",
+  "I think a lot of what I was taught, gathered, and learned is worth keeping. Heritage and wisdom and simply personal family and local history enrich the one able to tap such information. As it is I wish I had garnered more from my grandparents and parents."
+];
