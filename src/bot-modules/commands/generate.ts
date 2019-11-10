@@ -26,7 +26,7 @@ export class GenerateCommands {
   }
 
   private setGenerateCommand(): void {
-    this.DnDBot.onText(/^\/(g)|^\/(generate)/i, (msg: any, match: any): void => {
+    this.DnDBot.onText(/^\/(g)$|^\/(generate)$/i, (msg: any, match: any): void => {
       this.runGenerateCommand(msg, match);
     });
   }
