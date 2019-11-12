@@ -78,7 +78,7 @@ export class MTGSearch {
   private getRandomMTGCard(msg: TelegramBot.Message): void {
     Cards.random().then(
       (card: Card) => {
-        const priceCaption: string = card.usd ? `USD Price: $${card.usd}` : null;
+        const priceCaption: string = card.prices.usd ? `USD Price: $${card.prices.usd}` : null;
         this.HBot.sendPhoto(msg.chat.id, `${card.image_uris.normal}`, { caption: priceCaption });
       },
       (error: any) => {
@@ -157,7 +157,7 @@ export class MTGSearch {
    * @param card - The Card data fetched from ScryFall.
    */
   private sendSingleCardResult(msg: TelegramBot.Message, card: Card): void {
-    const priceCaption: string = card.usd ? `USD Price: $${card.usd}` : null;
+    const priceCaption: string = card.prices.usd ? `USD Price: $${card.prices.usd}` : null;
     if (card.card_faces) {
       // Multi faced card case
       card.card_faces.forEach((cardFace: any, index: number) => {
