@@ -7,10 +7,9 @@
   "scripts": {
     "compile-typescript": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && node index.js",
+    "start": "nodemon --watch",
     "switch_to_dev": "export $(cat .env | xargs) && wget --spider https://api.telegram.org/bot$TOKEN/setWebhook?url= --delete-after && node index.js",
-    "postinstall": "npm run compile-typescript",
-    "n": "nodemon --watch"
+    "postinstall": "npm run compile-typescript"
   },
   "author": "Volodymyr Lut",
   "license": "ISC",
