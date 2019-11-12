@@ -20,5 +20,8 @@
     "@types/node": "^12.12.7",
     "cheerio": "^1.0.0-rc.3",
     "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "scryfall-sdk": "^1.5.1"
   }
 }
