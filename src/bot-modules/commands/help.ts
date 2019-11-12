@@ -1,18 +1,21 @@
 const Bot = require('node-telegram-bot-api');
-const GeneratorCommandList = require("./generate");
+import { GeneratorCommandList } from './generate';
 
 export class BaseCommandList {
   public static COMMANDS: any = {
     dnd: {
+      title: "DnD",
       keys: ["dnd"],
       description: "The \/dnd command is used to search for DND related wiki pages based on provided critera."
     },
     generate: {
+      title: "Generate",
       keys: ["g", "generate"],
       description: "The \/generate command is used to generate a variety of things from character stats to dungeon maps.",
-      subcommands: GeneratorCommandList
+      subcommands: GeneratorCommandList.COMMANDS
     },
     roll: {
+      title: "Roll",
       keys: ["roll"],
       description: "The \/roll command is used to  roll a variety of user defined dice. It will default to a d6, but if you can also use the format XdY where X is the number of dice and Y is the sides for that die."
     }
@@ -58,28 +61,40 @@ export class HelpCommands {
   }
 
   private getCommandInfoString(command: any): string {
-    return command.keys.join() + "\n" + command.description + "\n";
+    let linesOfText: string[] = [
+      "<b>Command: " + command.title + "</b>",
+      "Aliase(s): " + command.keys.join(", "),
+      "<i>" + command.description + "</i>\n"
+    ];
+    if (command.subcommands) {
+      for (const key in command.subcommands) {
+        if (key) {
+          linesOfText = [...linesOfText, ...  this.getSubCommandInfoString(command.subcommands[key])];
+        }
+      }
+    }
+
+    return linesOfText.join("\n");
   }
-  // TODO - Flesh this out and use it when help is called with specific command in mind
-  private getSubCommandInfoString(command: any): string {
-    const subcommands = command.subcommands;
-    if (!subcommands) {
-      return "";
-    }
-    for (const key in subcommands) {
-      // TODO: Add more fleshed out returns here.
-    }
-    return command.keys.join() + "\n" + command.description + "\n";
+
+  private getSubCommandInfoString(command: any): string[] {
+    const linesOfText: string[] =  [
+      "\t\t\t\t\t\t<b>Sub-Command: " + command.title +"</b>",
+      "\t\t\t\t\t\tAliase(s): " + command.keys.join(", "),
+      "\t\t\t\t\t\t<i>" + command.description + "</i>\n"
+    ];
+
+    return linesOfText;
   }
 
   private listSingleDnDCommand(messageId: number, commandString?: string): void {
     if (BaseCommandList.COMMANDS[commandString]) {
-      this.DnDBot.sendMessage(messageId, this.getCommandInfoString(BaseCommandList.COMMANDS[commandString]));
+      this.DnDBot.sendMessage(messageId, this.getCommandInfoString(BaseCommandList.COMMANDS[commandString]), { parse_mode: 'HTML', disable_web_page_preview: true });
     } else {
 
       for (const key in BaseCommandList.COMMANDS) {
         if (BaseCommandList.COMMANDS[key].keys.indexOf(commandString) >= 0) {
-          this.DnDBot.sendMessage(messageId, this.getCommandInfoString(BaseCommandList.COMMANDS[key]));
+          this.DnDBot.sendMessage(messageId, this.getCommandInfoString(BaseCommandList.COMMANDS[key]), { parse_mode: 'HTML', disable_web_page_preview: true });
           return;
         }
       }
@@ -90,10 +105,10 @@ export class HelpCommands {
   private listAllDnDCommands(messageId: number): void {
     let commandListStr: string = "Here is a list of the base commands that I can provide services for:\n\n";
     commandListStr += this.getCommandListString(BaseCommandList.COMMANDS);
-    this.DnDBot.sendMessage(messageId, commandListStr);
+    this.DnDBot.sendMessage(messageId, commandListStr, { parse_mode: 'HTML', disable_web_page_preview: true });
   }
 
   private listNoCommandFound(messageId: number, commandString: string): void {
-    this.DnDBot.sendMessage(messageId, "I'm sorry, but I have no records of a \"" + commandString + "\" command. Try running /help to see a full list of basic commands.");
+    this.DnDBot.sendMessage(messageId, "I'm sorry, but I have no records of a \"" + commandString + "\" command. Try running /help to see a full list of basic commands.", { parse_mode: 'HTML', disable_web_page_preview: true });
   }
 }

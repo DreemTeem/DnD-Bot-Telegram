@@ -1,14 +1,16 @@
 {
   "name": "gygax-bot-telegram",
   "version": "1.0.0",
-  "description": "Starter pack for running telegram bot on the Heroku using Node.js",
+  "private": true,
+  "description": "Telegram Bot meant to assist in varios ways- focusing on helper commands for Dungeons and Dragons.",
   "main": "index.js",
   "scripts": {
     "compile-typescript": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node index.js",
     "switch_to_dev": "export $(cat .env | xargs) && wget --spider https://api.telegram.org/bot$TOKEN/setWebhook?url= --delete-after && node index.js",
-    "postinstall": "npm run compile-typescript"
+    "postinstall": "npm run compile-typescript",
+    "n": "nodemon --watch"
   },
   "author": "Volodymyr Lut",
   "license": "ISC",
@@ -22,5 +24,13 @@
     "typescript": "^3.7.2",
     "scryfall-sdk": "^1.5.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "nodemonConfig": {
+    "watch": ["src"],
+    "ext": "ts",
+    "ignore": [],
+    "exec": "tsc && node index.js"
+  }
 }

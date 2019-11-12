@@ -3,10 +3,12 @@ const Bot = require('node-telegram-bot-api');
 export class GeneratorCommandList {
   public static COMMANDS: any = {
     character: {
+      title: "Character",
       keys: ["c", "character"],
       description: "The character generator is used to generate the basic starting stats for a character: Strength, Inteligence, Charisma, Fortitude, Dexterity, and Wisdom."
     },
     map: {
+      title: "Map",
       keys: ["m", "map"],
       description: "The map generator allows the random generation of a dungeon map floor."
     }
