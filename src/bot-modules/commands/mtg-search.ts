@@ -110,7 +110,7 @@ export class MTGSearch {
         // Default API error message from Scryfall can be used at error.response.body.details
         if (error.statusCode === 404) {
           // We use a custom message here because the help link in the orignal message refers to dead link
-          this.HBot.sendMessage(msg.chat.id, `Sorry, your search query didn't match any cards. Please try refining your query or removing excess words.`);
+          this.sendEmptyCardResult(msg);
         } else {
           // This is for any unhandled errors that we're not expecting.
           this.HBot.sendMessage(msg.chat.id, `${error.response.body.details}`);
@@ -118,7 +118,9 @@ export class MTGSearch {
       })
       // Called once the API says there are no more cards left for us to get.
       .on('end', () => {
-        if (cardResults.length === 1) {
+        if (cardResults.length === 0) {
+          this.sendEmptyCardResult(msg);
+        } else if (cardResults.length === 1) {
           // If there's only one card, we send the info/image directly.
           this.sendSingleCardResult(msg, cardResults[0]);
         } else {
@@ -148,6 +150,14 @@ export class MTGSearch {
         this.HBot.sendMessage(msg.chat.id, `${error.response.body.details}`);
       },
     );
+  }
+
+  /**
+   * Function to send user a response saying no cards were found with their query.
+   * @param msg - The initial message sent to the bot. It allows us to send a message back.
+   */
+  private sendEmptyCardResult(msg: TelegramBot.Message) {
+    this.HBot.sendMessage(msg.chat.id, `Sorry, your search query didn't match any cards. Please try refining your query or removing excess words.`);
   }
 
   /**
