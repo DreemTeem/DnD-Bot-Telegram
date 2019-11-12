@@ -19,9 +19,8 @@
     "node-telegram-bot-api": "^0.30.0",
     "@types/node": "^12.12.7",
     "cheerio": "^1.0.0-rc.3",
-    "typescript": "^3.7.2"
-  },
-  "devDependencies": {
+    "typescript": "^3.7.2",
     "scryfall-sdk": "^1.5.1"
-  }
+  },
+  "devDependencies": {}
 }
