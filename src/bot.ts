@@ -5,7 +5,6 @@ import { RollCommands } from './bot-modules/commands/roll';
 import { DnDCommands } from './bot-modules/commands/dnd';
 import { GenerateCommands } from './bot-modules/commands/generate';
 import { HelpCommands } from './bot-modules/commands/help';
-import { YeetResponses } from './bot-modules/yeet/yeet';
 import { MTGSearch } from './bot-modules/commands/mtg-search';
 
 const Bot = require('node-telegram-bot-api');
@@ -26,7 +25,6 @@ new RollCommands(bot);
 new DnDCommands(bot);
 new GenerateCommands(bot);
 new HelpCommands(bot);
-new YeetResponses(bot);
 new MTGSearch(bot);
 
 module.exports = bot;
