@@ -55,29 +55,49 @@ export class GenerateCommands {
     return Math.floor(Math.random() * 6) + 1;
   }
 
-  private getStatResult(): number {
+  private getStatResult(): any {
     let result: number = 0;
+    const rolls = [];
+    let minResult: number = Number.MAX_SAFE_INTEGER;
     for (let i: number = 0; i < 4; i++) {
-      result += this.getDSix();
+      const roll = this.getDSix();
+      if (roll < minResult) {
+        minResult = roll;
+      }
+      rolls.push(roll);
+      result += roll;
     }
-    return result;
+    result -= minResult;
+    return {
+      result: result,
+      rolls: rolls,
+      dropped: minResult
+    };
   }
   // TODO - Add verbose functionality like the roll command
   private getCharacterStats(messageId: number, verbose: boolean = false): void {
-    if (verbose) {
-      for (let i: number = 0; i < 7; i++) {
-        for (let j: number = 0; j < 5; j++) {
-          const diceRoll = this.getDSix();
-        }
-      }
-    } else {
-      const statArray: string[] = [];
+    const statArray: string[] = [];
+    const verboseLogsArray: any[] = [];
       for (let i: number = 0; i < 6; i++) {
-        statArray.push("<i>Stat Roll " + (i+1) + "</i> : (" + this.getStatResult() + ")");
+        const statResult: any = this.getStatResult();
+        const result: string = statResult.result;
+        if (verbose) {
+          verboseLogsArray.push(statResult);
+        }
+        statArray.push("<i>Stat Roll " + (i+1) + "</i> : (" + result + ")");
       }
-      const message:string = "<b>Character Rolls</b>\n" + statArray.join("\n");
+      let verboseLog: string = "";
+      verboseLogsArray.forEach((logObj, index) => {
+        verboseLog += "Rolling dice for stat #" + (index + 1) + "\n";
+        const rolls: number[] = logObj.rolls;
+        const dropped: number[] = logObj.dropped;
+        rolls.forEach(roll => {
+          verboseLog += "Rolled 1d6 for a " + roll + "\n";
+        });
+        verboseLog += "Dropped lowest value " + logObj.dropped + " for a final result of " + logObj.result + "\n\n";
+      });
+      const message:string = verboseLog + "<b>Character Rolls</b>\n" + statArray.join("\n");
       this.DnDBot.sendMessage(messageId, message, { parse_mode: "HTML", disable_web_page_preview: true });
-    }
   }
 
   private getMap(messageId: number): void {
