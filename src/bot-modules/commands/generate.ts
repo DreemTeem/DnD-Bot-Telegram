@@ -28,7 +28,7 @@ export class GenerateCommands {
   }
 
   private setGenerateCommand(): void {
-    this.DnDBot.onText(/^\/(g)$|^\/(generate)$/i, (msg: any, match: any): void => {
+    this.DnDBot.onText(/^\/(g)|^\/(generate)/i, (msg: any, match: any): void => {
       this.runGenerateCommand(msg, match);
     });
   }
@@ -36,15 +36,17 @@ export class GenerateCommands {
   private runGenerateCommand(msg: any, match: any): void {
     const commandArray: string[] = msg.text.split(" ");
     const verbose: boolean = msg.text.indexOf(" -v") > 0;
-    if (commandArray.length === 1) {
-      this.getGenericResponse(msg.chat.id);
-    } else {
-      if (GeneratorCommandList.COMMANDS.character.keys.indexOf(commandArray[1]) >= 0) {
-        this.getCharacterStats(msg.chat.id, verbose);
-      } else if (GeneratorCommandList.COMMANDS.map.keys.indexOf(commandArray[1]) >= 0) {
-        this.getMap(msg.chat.id);
+    if (commandArray[0] === "/g" || commandArray[0] === "/generate") {
+      if (commandArray.length === 1) {
+        this.getGenericResponse(msg.chat.id);
       } else {
-        this.getMissingCommandResponse(msg.chat.id, commandArray.splice(1, commandArray.length).join(" "));
+        if (GeneratorCommandList.COMMANDS.character.keys.indexOf(commandArray[1]) >= 0) {
+          this.getCharacterStats(msg.chat.id, verbose);
+        } else if (GeneratorCommandList.COMMANDS.map.keys.indexOf(commandArray[1]) >= 0) {
+          this.getMap(msg.chat.id);
+        } else {
+          this.getMissingCommandResponse(msg.chat.id, commandArray.splice(1, commandArray.length).join(" "));
+        }
       }
     }
   }
@@ -69,11 +71,12 @@ export class GenerateCommands {
         }
       }
     } else {
-      const statArray: number[] = [];
+      const statArray: string[] = [];
       for (let i: number = 0; i < 6; i++) {
-        statArray.push(this.getStatResult());
+        statArray.push("<i>Stat Roll " + (i+1) + "</i> : (" + this.getStatResult() + ")");
       }
-      this.DnDBot.sendMessage(messageId, statArray.join("\n"), { parse_mode: "HTML", disable_web_page_preview: true });
+      const message:string = "<b>Character Rolls</b>\n" + statArray.join("\n");
+      this.DnDBot.sendMessage(messageId, message, { parse_mode: "HTML", disable_web_page_preview: true });
     }
   }
 
