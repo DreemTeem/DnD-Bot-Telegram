@@ -33,7 +33,9 @@ export class TextResponses {
 
   private setSlippyResponses(): void {
     this.GBot.onText(/slippy ?i?'? ?s ?dead/i, (msg: any, match: any): void => {
-      this.GBot.sendMessage(msg.chat.id, '<i>N I C E</i>', { parse_mode: 'HTML', disable_web_page_preview: true });
+      // TODO switch back to old message if image is too intrusive for chat
+      // this.GBot.sendMessage(msg.chat.id, '<i>N I C E</i>', { parse_mode: 'HTML', disable_web_page_preview: true });
+      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/nice.png');
     });
   }
 }
