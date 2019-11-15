@@ -27,7 +27,12 @@ export class TextResponses {
 
   private setBasicYeetResponses(): void {
     this.GBot.onText(/yee+t/i, (msg: any, match: any): void => {
-      this.GBot.sendMessage(msg.chat.id, 'The Yeet King Grows...');
+      const numMatches = msg.text.match(/(yee+t)/ig).length;
+      let growthString: string = "Grows...";
+      for (let i = 0; i < numMatches - 1; i++) {
+        growthString = "Grows and " + growthString;
+      }
+      this.GBot.sendMessage(msg.chat.id, 'The Yeet King ' + growthString);
     });
   }
 
