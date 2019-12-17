@@ -64,7 +64,7 @@ export class DnDCommands {
   private getGenericSearch(messageId: number, searchQuery: string): void {
     const uriRoot: string = "http://www.dandwiki.com";
     const uriSearch: string = encodeURIComponent(searchQuery);
-    this.request.get(uriRoot + "/wiki/Special:Search?search=" + uriSearch + "&ns100=1&fulltext=Search+the+SRD", (error: any, response: any, body: any) => {
+    this.request.get(uriRoot + "/wiki/Special:Search?search=" + uriSearch + "&ns180=1&fulltext=Search+the+SRD", (error: any, response: any, body: any) => {
       if (response) {
         const $: any = this.cheerio.load(response.body);
         const mainResults: any = $(".mw-search-results").eq(0).find("li a");
