@@ -9,6 +9,7 @@ export class TextResponses {
     this.setGaryGygaxResponses();
     this.setBasicYeetResponses();
     this.setSlippyResponses();
+    this.setSneckoResponses();
   }
 
   private setGaryGygaxResponses(): void {
@@ -41,6 +42,16 @@ export class TextResponses {
       // TODO switch back to old message if image is too intrusive for chat
       // this.GBot.sendMessage(msg.chat.id, '<i>N I C E</i>', { parse_mode: 'HTML', disable_web_page_preview: true });
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/nice.png');
+    });
+  }
+
+  private setSneckoResponses(): void {
+    this.GBot.onText(/praise snecko/i, (msg: any, match: any): void => {
+      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', {caption: 'PRAISE SNECKO'});
+    });
+
+    this.GBot.onText(/^\/snecko/i, (msg: any, match: any): void => {
+      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', {caption: 'PRAISE SNECKO'});
     });
   }
 }

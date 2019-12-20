@@ -16,7 +16,7 @@ export class RollCommands {
       const diceMatch: string[] = msg.text.match(/([1-9][0-9]*)d([1-9][0-9]*)/);
 
       if (!diceMatch) {
-        this.GBot.sendMessage(msg.chat.id, this.getRollMessage(6, 1, verbose));
+        this.GBot.sendMessage(msg.chat.id, this.getRollMessage(20, 1, verbose));
       } else {
         const numberOfDice: number = parseInt(diceMatch[1], 10);
         const diceSize: number = parseInt(diceMatch[2], 10);
