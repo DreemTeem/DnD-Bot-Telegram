@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --watch",
     "switch_to_dev": "export $(cat .env | xargs) && wget --spider https://api.telegram.org/bot$TOKEN/setWebhook?url= --delete-after && node index.js",
-    "postinstall": "npm run compile-typescript"
+    "postinstall": "npm run compile-typescript",
+    "heroku": "git push heroku master"
   },
   "author": "Volodymyr Lut",
   "license": "ISC",

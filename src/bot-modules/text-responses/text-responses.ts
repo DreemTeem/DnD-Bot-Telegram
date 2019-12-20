@@ -10,6 +10,7 @@ export class TextResponses {
     this.setBasicYeetResponses();
     this.setSlippyResponses();
     this.setSneckoResponses();
+    this.setStonksResponses();
   }
 
   private setGaryGygaxResponses(): void {
@@ -47,11 +48,18 @@ export class TextResponses {
 
   private setSneckoResponses(): void {
     this.GBot.onText(/praise snecko/i, (msg: any, match: any): void => {
-      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', {caption: 'PRAISE SNECKO'});
+      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', { caption: 'PRAISE SNECKO' });
     });
 
     this.GBot.onText(/^\/snecko/i, (msg: any, match: any): void => {
-      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', {caption: 'PRAISE SNECKO'});
+      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', { caption: 'PRAISE SNECKO' });
+    });
+  }
+
+  private setStonksResponses(): void {
+    this.GBot.onText(/stonk/i, (msg: any, match: any): void => {
+      const stonk: number = Math.floor(Math.random() * 4) + 1;
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/stonk' + stonk + '.mp4');
     });
   }
 }
