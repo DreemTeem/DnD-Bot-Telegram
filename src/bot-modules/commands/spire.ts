@@ -33,24 +33,24 @@ export class SpireCommands {
       console.log('\n\nSPIRE COMMAND THROWN\n\n')
       const result = Math.floor(Math.random() * 4);
       this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
-      switch (result) {
-        case 0:
-          this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
-          // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/ironclad.jpg', { caption: SpireCommands.characters.ironclad.intro });
-          break;
-        case 1:
-          this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
-          // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/silent.jpg', { caption: SpireCommands.characters.silent.intro });
-          break;
-        case 2:
-          this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
-          // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/defect.jpg', { caption: SpireCommands.characters.defect.intro });
-          break;
-        case 3:
-          this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
-          // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/watcher.jpg', { caption: SpireCommands.characters.watcher.intro });
-          break;
-      }
+      // switch (result) {
+      //   case 0:
+      //     this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
+      //     // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/ironclad.jpg', { caption: SpireCommands.characters.ironclad.intro });
+      //     break;
+      //   case 1:
+      //     this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
+      //     // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/silent.jpg', { caption: SpireCommands.characters.silent.intro });
+      //     break;
+      //   case 2:
+      //     this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
+      //     // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/defect.jpg', { caption: SpireCommands.characters.defect.intro });
+      //     break;
+      //   case 3:
+      //     this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
+      //     // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/watcher.jpg', { caption: SpireCommands.characters.watcher.intro });
+      //     break;
+      // }
     });
   }
 }
