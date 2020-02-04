@@ -53,7 +53,7 @@ export class TextResponses {
     });
 
     this.GBot.onText(/^\/snecko/i, (msg: any, match: any): void => {
-      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/ironclad.jpg', { caption: "SpireCommands.characters.ironclad.intro" });
+      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', { caption: "SpireCommands.characters.ironclad.intro" });
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', { caption: 'PRAISE SNECKO' });
     });
   }
