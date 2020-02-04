@@ -11,6 +11,7 @@ export class TextResponses {
     this.setSlippyResponses();
     this.setSneckoResponses();
     this.setStonksResponses();
+    this.setBirdUpResponses();
   }
 
   private setGaryGygaxResponses(): void {
@@ -60,6 +61,12 @@ export class TextResponses {
     this.GBot.onText(/stonk/i, (msg: any, match: any): void => {
       const stonk: number = Math.floor(Math.random() * 4) + 1;
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/stonk' + stonk + '.mp4');
+    });
+  }
+
+  private setBirdUpResponses(): void {
+    this.GBot.onText(/bird up/i, (msg: any, match: any): void => {
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/bird.gif');
     });
   }
 }
