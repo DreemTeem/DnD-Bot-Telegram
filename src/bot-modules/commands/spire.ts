@@ -28,7 +28,7 @@ export class SpireCommands {
   }
 
   private setSpireCommand(): void {
-    this.GBot.onText(/spire/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/spire/i, (msg: any, match: any): void => {
       const result = Math.floor(Math.random() * 4);
       switch (result) {
         case 0:
