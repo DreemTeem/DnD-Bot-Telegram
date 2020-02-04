@@ -35,16 +35,20 @@ export class SpireCommands {
       this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
       switch (result) {
         case 0:
-          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/ironclad.jpg', { caption: SpireCommands.characters.ironclad.intro });
+          this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
+          // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/ironclad.jpg', { caption: SpireCommands.characters.ironclad.intro });
           break;
         case 1:
-          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/silent.jpg', { caption: SpireCommands.characters.silent.intro });
+          this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
+          // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/silent.jpg', { caption: SpireCommands.characters.silent.intro });
           break;
         case 2:
-          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/defect.jpg', { caption: SpireCommands.characters.defect.intro });
+          this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
+          // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/defect.jpg', { caption: SpireCommands.characters.defect.intro });
           break;
         case 3:
-          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/watcher.jpg', { caption: SpireCommands.characters.watcher.intro });
+          this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
+          // this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/watcher.jpg', { caption: SpireCommands.characters.watcher.intro });
           break;
       }
     });
