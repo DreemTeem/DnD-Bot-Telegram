@@ -5,32 +5,35 @@
   "description": "Telegram Bot meant to assist in varios ways- focusing on helper commands for Dungeons and Dragons.",
   "main": "index.js",
   "scripts": {
-    "compile-typescript": "tsc",
+    "compile": "rimraf output/* && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --watch",
     "switch_to_dev": "export $(cat .env | xargs) && wget --spider https://api.telegram.org/bot$TOKEN/setWebhook?url= --delete-after && node index.js",
-    "postinstall": "npm run compile-typescript",
+    "postinstall": "npm run compile",
     "heroku": "git push heroku master"
   },
   "author": "Volodymyr Lut",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^12.12.7",
     "body-parser": "^1.15.0",
+    "cheerio": "^1.0.0-rc.3",
     "dotenv": "^4.0.0",
     "express": "^4.13.4",
     "node-telegram-bot-api": "^0.30.0",
-    "@types/node": "^12.12.7",
-    "cheerio": "^1.0.0-rc.3",
-    "typescript": "^3.7.2",
-    "scryfall-sdk": "^1.5.1"
+    "rimraf": "^3.0.1",
+    "scryfall-sdk": "^1.5.1",
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
   },
   "nodemonConfig": {
-    "watch": ["src"],
+    "watch": [
+      "src"
+    ],
     "ext": "ts",
     "ignore": [],
-    "exec": "tsc && node index.js"
+    "exec": "rimraf output/* && tsc && node index.js"
   }
 }

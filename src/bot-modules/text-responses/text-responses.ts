@@ -12,6 +12,7 @@ export class TextResponses {
     this.setSneckoResponses();
     this.setStonksResponses();
     this.setBirdUpResponses();
+    this.setMalfestioResponses();
   }
 
   private setGaryGygaxResponses(): void {
@@ -67,6 +68,12 @@ export class TextResponses {
   private setBirdUpResponses(): void {
     this.GBot.onText(/bird up/i, (msg: any, match: any): void => {
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/bird.gif');
+    });
+  }
+
+  private setMalfestioResponses(): void {
+    this.GBot.onText(/moth/i, (msg: any, match: any): void => {
+      this.GBot.sendMessage(msg.chat.id, msg.from.first_name + ', did you mean "Owl"?');
     });
   }
 }

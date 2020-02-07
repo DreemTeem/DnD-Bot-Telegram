@@ -30,7 +30,6 @@ export class SpireCommands {
   private setSpireCommand(): void {
     this.GBot.onText(/^\/spire/i, (msg: any, match: any): void => {
       const result = Math.floor(Math.random() * 4);
-      this.GBot.sendMessage(msg.chat.id, "RESULT " + result);
       switch (result) {
         case 0:
           this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/ironclad.jpg', { caption: SpireCommands.characters.ironclad.intro });
