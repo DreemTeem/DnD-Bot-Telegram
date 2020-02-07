@@ -29,8 +29,8 @@ new HelpCommands(bot);
 new MTGSearch(bot);
 new SpireCommands(bot);
 
-bot.on("polling_error", (err) => {
-  // Muting double error when running locally
-});
+// bot.on("polling_error", (err) => {
+//   // Muting double error when running locally
+// });
 
 module.exports = bot;
