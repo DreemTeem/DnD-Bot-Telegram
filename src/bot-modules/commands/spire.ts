@@ -78,6 +78,7 @@ export class SpireCommands {
 
       promise.then(() => {
         if (challengeIndex > 0) {
+          this.GBot.sendMessage(msg.chat.id, 'Time for a\nCHALLENGE...');
           let numChallenges = 1;
           if (challengeIndex < commandArray.length - 1) {
             const nextIndexNumber = parseInt(commandArray[challengeIndex + 1], 10);
