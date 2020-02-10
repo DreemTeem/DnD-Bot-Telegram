@@ -72,7 +72,7 @@ export class TextResponses {
   }
 
   private setMalfestioResponses(): void {
-    this.GBot.onText(/m *o *t *h/i, (msg: any, match: any): void => {
+    this.GBot.onText(/\bm *o *t *h *\b/i, (msg: any, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, msg.from.first_name + ', did you mean "Owl"?');
     });
   }
