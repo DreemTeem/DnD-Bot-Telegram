@@ -14,6 +14,7 @@ export class TextResponses {
     this.setBirdUpResponses();
     this.setMalfestioResponses();
     this.setNaniResponse();
+    this.setKojimaResponses();
   }
 
   private setGaryGygaxResponses(): void {
@@ -87,4 +88,11 @@ export class TextResponses {
       this.GBot.sendMessage(msg.chat.id, nani);
     });
   }
+
+  private setKojimaResponses(): void {
+   this.GBot.onText(/^\/koj/i, (msg: any, match: any): void => {
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/kojima.gif');
+    });
+  }
+
 }
