@@ -2,7 +2,7 @@
   "name": "gygax-bot-telegram",
   "version": "1.0.0",
   "private": true,
-  "description": "Telegram Bot meant to assist in varios ways- focusing on helper commands for Dungeons and Dragons.",
+  "description": "Telegram Bot meant to assist in various ways- focusing on helper commands for Dungeons and Dragons.",
   "main": "index.js",
   "scripts": {
     "compile": "rimraf output/* && tsc",
