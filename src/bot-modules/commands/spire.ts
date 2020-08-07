@@ -171,9 +171,8 @@ export class SpireCommands {
       const genericChallengeIndex = commandArray.indexOf('-gc');
       const ascensionIndex = commandArray.indexOf('-a');
 
-      let result = Math.floor(Math.random() * 4);
+      const result = Math.floor(Math.random() * 4);
       let character = SpireCommands.characters.ironclad;
-      result = 1;
       switch (result) {
         case 1:
           character = SpireCommands.characters.silent;
