@@ -1,0 +1,23 @@
+export class Ironclad {
+    public static intro: string = "IT'S TIME FOR THE YEET KING HIMSELF. \n LET'S GET REDY TO FLEX OUR WAY TO FREEDOM. \n I R O N C L A D";
+    public static imageName: string = "ironclad.jpg";
+    public static challenges: string[] = [
+        "GRIT YOUR TEETH - IT'S TIME TO TAKE ALL EXHAUST CARDS.",
+        "IS THAT HELL YOU SMELL? - YOU HAVE TO TAKE BRIMSTONE! SAY HI TO THE BIRDS FOR ME.",
+        "MUSCLE MILK \"GET SWOLE\" - YOU NOW HAVE TO TAKE ALL FLEX CARDS.",
+        "THROW YOUR WEIGHT AROUND - YOU MUST BUILD A BODY SLAM DECK.",
+        "WHILE YOU WERE PLAYING OTHER CHARACTERS I WAS STUDYING THE BLADE - TIME FOR A PERFECTED STRIKE RUN.",
+        "I'M MORE INTO CARDIO - YOU ARE NOT ALLOWED TO TAKE ANY CARDS OR POTIONS THAT INCREASE STRENGTH.",
+        "RUMPRAGE - TAKE ALL OFFERED RAMPAGES."
+    ];
+    public static uniqueChallenges: SpireUniqueChallenge[] = [
+        {
+            challengeName: "BOSS_RELICS",
+            challenges: [
+                "NO PAIN NO GAIN - IF MARK OF PAIN IS OFFERED, YOU MUST TAKE IT. (OVERWRITTEN BY \"PRAISE SNECKO\" RULE)",
+                "CUUUUBE - IF RUNIC CUBE IS OFFERED, YOU MUST TAKE IT. (OVERWRITTEN BY \"PRAISE SNECKO\" RULE)",
+                "BLOOD TRANSFUSION - IF BLACK BLOOD IS OFFERED, YOU MUST TAKE IT. (OVERWRITTEN BY \"PRAISE SNECKO\" RULE)"
+            ]
+        }
+    ];
+}
