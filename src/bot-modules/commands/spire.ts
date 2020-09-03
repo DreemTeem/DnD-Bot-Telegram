@@ -17,18 +17,67 @@ export class SpireCommands {
       const genericChallengeIndex = commandArray.indexOf('-gc');
       const ascensionIndex = commandArray.indexOf('-a');
 
-      const result = Math.floor(Math.random() * 4);
-      let character = SpireChallenges.characters.ironclad;
-      switch (result) {
-        case 1:
-          character = SpireChallenges.characters.silent;
-          break;
-        case 2:
-          character = SpireChallenges.characters.defect;
-          break;
-        case 3:
-          character = SpireChallenges.characters.watcher;
-          break;
+      const ironcladFlag = commandArray.indexOf('-ir');
+      const silentFlag = commandArray.indexOf('-si');
+      const defectFlag = commandArray.indexOf('-de');
+      const watcherFlag = commandArray.indexOf('-wa');
+
+      let character;
+
+      // If no character flag was given
+      if (
+        ironcladFlag === -1 &&
+        silentFlag === -1 &&
+        defectFlag === -1 &&
+        watcherFlag === -1
+      ) {
+        character = SpireChallenges.characters.ironclad;
+        const result = Math.floor(Math.random() * 4);
+        switch (result) {
+          case 1:
+            character = SpireChallenges.characters.silent;
+            break;
+          case 2:
+            character = SpireChallenges.characters.defect;
+            break;
+          case 3:
+            character = SpireChallenges.characters.watcher;
+            break;
+        }
+      } else {
+        const characterFlagArray = [
+          ironcladFlag,
+          silentFlag,
+          defectFlag,
+          watcherFlag
+        ];
+        const sortedIndexes = characterFlagArray.sort((a, b) => {
+          if (a === b) {
+            return 0;
+          }
+          return (a < b ? -1 : 1)
+        });
+        let firstCharacterFlagIndex: number = -1;
+        let sortedIndexesIndex: number = 0;
+        while (firstCharacterFlagIndex === -1) {
+          firstCharacterFlagIndex = sortedIndexes[sortedIndexesIndex];
+          sortedIndexesIndex++;
+        }
+
+        switch (firstCharacterFlagIndex) {
+          case ironcladFlag:
+            character = SpireChallenges.characters.ironclad;
+            break;
+          case silentFlag:
+            character = SpireChallenges.characters.silent;
+            break;
+          case defectFlag:
+            character = SpireChallenges.characters.defect;
+            break;
+          case watcherFlag:
+            character = SpireChallenges.characters.watcher;
+            break;
+        }
       }
 
       const promise = this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/spire/' + character.imageName, { caption: character.intro });

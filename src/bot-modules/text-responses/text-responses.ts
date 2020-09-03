@@ -1,8 +1,11 @@
 const Bot = require('node-telegram-bot-api');
+import { Canvas, Image } from 'canvas';
 import { GygaxResponses } from './gygax-responses';
+import { LonkGenerator } from '../utility/lonk-generator';
 
 export class TextResponses {
   private GBot;
+  private lonkImg: Image;
 
   constructor(botReference) {
     this.GBot = botReference;
@@ -15,6 +18,22 @@ export class TextResponses {
     this.setMalfestioResponses();
     this.setNaniResponse();
     this.setKojimaResponses();
+    this.setMyesResponses();
+    this.loadCanvasImage(__dirname + '/../../../assets/lonk_alpha.png').then((image: Image) => {
+      this.setLonkResponses(image);
+    }, () => {
+      this.setLonkResponses();
+    });
+  }
+
+  private loadCanvasImage(url: string): Promise<Image> {
+    const image = new Image();
+    const imagePromise = new Promise<Image>((resolve, reject) => {
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+    });
+    image.src = url;
+    return imagePromise;
   }
 
   private setGaryGygaxResponses(): void {
@@ -90,9 +109,28 @@ export class TextResponses {
   }
 
   private setKojimaResponses(): void {
-   this.GBot.onText(/^\/koj/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/koj/i, (msg: any, match: any): void => {
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/kojima.gif');
     });
+  }
+
+  private setMyesResponses(): void {
+    this.GBot.onText(/myes/i, (msg: any, match: any): void => {
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/myes.gif');
+    });
+  }
+
+  private setLonkResponses(image?: Image): void {
+    if (image) {
+      this.GBot.onText(/lo+n+k/i, (msg: any, match: any): void => {
+        const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
+        this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
+      });
+    } else {
+      this.GBot.onText(/lo+n+k/i, (msg: any, match: any): void => {
+        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/lonk.jpg');
+      });
+    }
   }
 
 }
