@@ -16,14 +16,17 @@ export class TextResponses {
     this.setStonksResponses();
     this.setBirdUpResponses();
     this.setMalfestioResponses();
+    this.setBlueCircuiResponses();
     this.setNaniResponse();
     this.setKojimaResponses();
     this.setMyesResponses();
+    this.setVeryCoolResponses();
     this.loadCanvasImage(__dirname + '/../../../assets/lonk_alpha.png').then((image: Image) => {
       this.setLonkResponses(image);
     }, () => {
       this.setLonkResponses();
     });
+    this.setNekoparaDeanDidThisResponse();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -93,10 +96,19 @@ export class TextResponses {
   }
 
   private setMalfestioResponses(): void {
-    this.GBot.onText(/\bm *o *t *h *\b/i, (msg: any, match: any): void => {
+    this.GBot.onText(/\bm *o *t *h *s* *\b/i, (msg: any, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, msg.from.first_name + ', did you mean "Owl"?');
       if (msg.from.id === 358426865) {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/derek_bird.jpg', { caption: '"Malfestio is a Bird Wyvern"\n - Monster Hunter Wiki' });
+      }
+    });
+  }
+
+  private setBlueCircuiResponses(): void {
+    this.GBot.onText(/\bp *u *r *p *l *e *\b/i, (msg: any, match: any): void => {
+      if (msg.from.id === 358426865) {
+        this.GBot.sendMessage(msg.chat.id, msg.from.first_name + ', did you mean "Blue"?');
+        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/derek_blue_circuits.jpg', { caption: '"The Processing Unit (or "blue circuit") is the third tier of circuit"\n - Factorio Wiki' });
       }
     });
   }
@@ -120,6 +132,13 @@ export class TextResponses {
     });
   }
 
+  private setVeryCoolResponses(): void {
+    this.GBot.onText(/v+e+r+y+ coo+l+/i, (msg: any, match: any): void => {
+      const cool: number = Math.floor(Math.random() * 3) + 1;
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/very_cool/very_cool' + cool + '.gif');
+    });
+  }
+
   private setLonkResponses(image?: Image): void {
     if (image) {
       this.GBot.onText(/lo+n+k/i, (msg: any, match: any): void => {
@@ -131,6 +150,13 @@ export class TextResponses {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/lonk.jpg');
       });
     }
+  }
+
+  private setNekoparaDeanDidThisResponse(): void {
+    this.GBot.onText(/heckachi|nekopara/i, (msg: any, match: any): void => {
+      const neko: number = Math.floor(Math.random() * 9) + 1;
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/neko/neko' + neko + '.gif');
+    });
   }
 
 }

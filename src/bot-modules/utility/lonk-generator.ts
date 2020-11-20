@@ -9,7 +9,6 @@ export class LonkGenerator {
         let scale = Math.random();
         let anger = 0;
 
-
         if (scale < 0.375) {
             // Minimum scale before the image is too small
             scale = 0.375;
@@ -54,6 +53,12 @@ export class LonkGenerator {
         ctx.resetTransform();
         ctx.fillStyle = 'rgba(255,0,0,' + anger + ')';
         ctx.fillRect(0, 0, sideLength, sideLength);
+
+        if (d100 === 100) {
+            ctx.globalCompositeOperation = 'difference';
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, sideLength, sideLength);
+        }
 
         return canvas.toBuffer('image/png');
     }
