@@ -4,3 +4,4 @@ output/*
 # Heroku environment configuration
 .env
 env.cmd
+user-ids/*

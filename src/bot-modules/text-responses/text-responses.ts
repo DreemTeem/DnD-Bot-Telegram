@@ -1,7 +1,8 @@
 const Bot = require('node-telegram-bot-api');
-import { Canvas, Image } from 'canvas';
+import { Image } from 'canvas';
 import { GygaxResponses } from './gygax-responses';
 import { LonkGenerator } from '../utility/lonk-generator';
+import { GlobalHelpers } from '../utility/global-helpers';
 
 export class TextResponses {
   private GBot;
@@ -27,6 +28,9 @@ export class TextResponses {
       this.setLonkResponses();
     });
     this.setNekoparaDeanDidThisResponse();
+    this.setRoarResponse();
+    this.setShrugResponse();
+    this.setPapaCResponse();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -156,6 +160,32 @@ export class TextResponses {
     this.GBot.onText(/heckachi|nekopara/i, (msg: any, match: any): void => {
       const neko: number = Math.floor(Math.random() * 9) + 1;
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/neko/neko' + neko + '.gif');
+    });
+  }
+
+  private setRoarResponse(): void {
+    this.GBot.onText(/^\/roar/i, (msg: any, match: any): void => {
+      const roar: number = Math.floor(Math.random() * 10) + 1;
+      if (roar >= 9) {
+        this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/roar.mp4');
+      } else {
+        this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/do_roar.mp4');
+      }
+
+    });
+  }
+
+  private setShrugResponse(): void {
+    this.GBot.onText(/^\/shrug/i, (msg: any, match: any): void => {
+      // GlobalHelpers.deleteCommandMessage(this.GBot, msg);
+      this.GBot.sendMessage(msg.chat.id, '¯\\_(ツ)_/¯');
+    });
+  }
+
+  private setPapaCResponse(): void {
+    this.GBot.onText(/^\/papac/i, (msg: any, match: any): void => {
+      // GlobalHelpers.deleteCommandMessage(this.GBot, msg);
+      this.GBot.sendMessage(msg.chat.id, 'yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. Zelda is dying Papa C.');
     });
   }
 

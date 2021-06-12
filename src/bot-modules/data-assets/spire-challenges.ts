@@ -3,6 +3,7 @@ import { Silent } from "./spire-challenges/silent";
 import { Defect } from "./spire-challenges/defect";
 import { Watcher } from "./spire-challenges/watcher";
 import { GenericChallenges } from "./spire-challenges/generic";
+import { CustomChallenges } from "./spire-challenges/custom";
 
 export class SpireChallenges {
     public static characters: SpireCharacterList = {
@@ -36,4 +37,9 @@ export class SpireChallenges {
         challenges: GenericChallenges.challenges,
         uniqueChallenges: GenericChallenges.uniqueChallenges
     };
+
+    public static customChallenges: GenericSpireChallenge = {
+        challenges: CustomChallenges.challenges,
+        uniqueChallenges: CustomChallenges.uniqueChallenges
+    }
 }

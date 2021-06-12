@@ -1,4 +1,5 @@
 import { SpireChallenges } from "../data-assets/spire-challenges";
+import { CustomChallenges } from "../data-assets/spire-challenges/custom";
 
 const Bot = require('node-telegram-bot-api');
 
@@ -16,6 +17,7 @@ export class SpireCommands {
       const challengeIndex = commandArray.indexOf('-c');
       const genericChallengeIndex = commandArray.indexOf('-gc');
       const ascensionIndex = commandArray.indexOf('-a');
+      const customRunIndex = commandArray.indexOf('-cu');
 
       const ironcladFlag = commandArray.indexOf('-ir');
       const silentFlag = commandArray.indexOf('-si');
@@ -92,8 +94,58 @@ export class SpireCommands {
           }
         }
 
+        if (customRunIndex > 0) {
+          this.GBot.sendMessage(msg.chat.id, 'IN THE MOOD FOR MORE CHAOS?');
+          let numChallenges = 1;
+          if (customRunIndex < commandArray.length - 1) {
+            const nextIndexNumber = parseInt(commandArray[customRunIndex + 1], 10);
+            if (!isNaN(nextIndexNumber)) {
+              numChallenges = nextIndexNumber;
+            }
+          }
+
+          const addedChallengeIndexes = [];
+          let addedChallenges = [];
+          let availableChallenges = [].concat(SpireChallenges.customChallenges.challenges);
+
+          SpireChallenges.customChallenges.uniqueChallenges.forEach((challengeObj) => {
+            if (challengeObj.challenges) {
+              const uniqueChallengeIndex = Math.floor(Math.random() * challengeObj.challenges.length);
+              availableChallenges.push(challengeObj.challenges[uniqueChallengeIndex]);
+            }
+          });
+
+          if (numChallenges > availableChallenges.length) {
+            numChallenges = availableChallenges.length;
+          }
+
+          for (let i = 0; i < numChallenges; i++) {
+            let newChallengeIndex = Math.floor(Math.random() * availableChallenges.length);
+
+            while (addedChallengeIndexes.indexOf(newChallengeIndex) >= 0) {
+              newChallengeIndex = Math.floor(Math.random() * availableChallenges.length);
+            }
+            addedChallengeIndexes.push(newChallengeIndex);
+          }
+
+          addedChallengeIndexes.sort((a,b) => a - b).forEach(index => {
+            addedChallenges.push(availableChallenges[index]);
+          });
+
+          // Daily mods overrides everything else so if it's selected it's all you'll see
+          if (addedChallengeIndexes.indexOf(CustomChallenges.dailyModsIndex) >= 0) {
+            addedChallenges = [availableChallenges[CustomChallenges.dailyModsIndex]];
+          }
+
+          let message = '';
+          addedChallenges.forEach(challegeString => {
+            message += '- ' + challegeString + '\n';
+          });
+          this.GBot.sendMessage(msg.chat.id, message);
+        }
+
         if (challengeIndex > 0 || genericChallengeIndex > 0) {
-          this.GBot.sendMessage(msg.chat.id, 'Time for a\nCHALLENGE...');
+          this.GBot.sendMessage(msg.chat.id, 'TIME FOR A \nCHALLENGE...');
           let numChallenges = 1;
           if (challengeIndex < commandArray.length - 1) {
             const nextIndexNumber = parseInt(commandArray[challengeIndex + 1], 10);
@@ -110,6 +162,7 @@ export class SpireCommands {
               }
             }
           }
+
           const addedChallengeIndexes = [];
           const addedChallenges = [];
           let availableChallenges = [].concat(character.challenges);
