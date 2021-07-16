@@ -31,6 +31,7 @@ export class TextResponses {
     this.setRoarResponse();
     this.setShrugResponse();
     this.setPapaCResponse();
+    this.setUnderstandableResponse();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -186,6 +187,12 @@ export class TextResponses {
     this.GBot.onText(/^\/papac/i, (msg: any, match: any): void => {
       // GlobalHelpers.deleteCommandMessage(this.GBot, msg);
       this.GBot.sendMessage(msg.chat.id, 'yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. Zelda is dying Papa C.');
+    });
+  }
+
+  private setUnderstandableResponse(): void {
+    this.GBot.onText(/^\/understandable/i, (msg: any, match: any): void => {
+      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/understandable.png');
     });
   }
 
