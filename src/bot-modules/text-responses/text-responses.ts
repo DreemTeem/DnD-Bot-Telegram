@@ -32,7 +32,7 @@ export class TextResponses {
     this.setShrugResponse();
     this.setPapaCResponse();
     this.setUnderstandableResponse();
-    this.setSueveResponses();
+    this.setSuaveResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -197,9 +197,10 @@ export class TextResponses {
     });
   }
 
-  private setSueveResponses(): void {
-    this.GBot.onText(/sueve/i, (msg: any, match: any): void => {
-      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/sueve.gif');
+  private setSuaveResponses(): void {
+    this.GBot.onText(/suave/i, (msg: any, match: any): void => {
+      const suave: number = Math.floor(Math.random() * 2) + 1;
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/suave' + suave + '.gif');
     });
   }
 
