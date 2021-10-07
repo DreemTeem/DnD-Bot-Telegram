@@ -32,6 +32,7 @@ export class TextResponses {
     this.setShrugResponse();
     this.setPapaCResponse();
     this.setUnderstandableResponse();
+    this.setSueveResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -193,6 +194,12 @@ export class TextResponses {
   private setUnderstandableResponse(): void {
     this.GBot.onText(/^\/understandable/i, (msg: any, match: any): void => {
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/understandable.png');
+    });
+  }
+
+  private setSueveResponses(): void {
+    this.GBot.onText(/sueve/i, (msg: any, match: any): void => {
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/sueve.gif');
     });
   }
 
