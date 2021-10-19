@@ -199,8 +199,8 @@ export class TextResponses {
 
   private setSuaveResponses(): void {
     this.GBot.onText(/suave/i, (msg: any, match: any): void => {
-      const suave: number = Math.floor(Math.random() * 2) + 1;
-      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/suave' + suave + '.gif');
+      const suave: number = Math.floor(Math.random() * 4) + 1;
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/suave/suave' + suave + '.gif');
     });
   }
 
