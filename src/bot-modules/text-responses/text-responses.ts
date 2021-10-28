@@ -33,6 +33,7 @@ export class TextResponses {
     this.setPapaCResponse();
     this.setUnderstandableResponse();
     this.setSuaveResponses();
+    this.setOuterWildsResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -201,6 +202,13 @@ export class TextResponses {
     this.GBot.onText(/suave/i, (msg: any, match: any): void => {
       const suave: number = Math.floor(Math.random() * 4) + 1;
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/suave/suave' + suave + '.gif');
+    });
+  }
+
+  private setOuterWildsResponses(): void {
+    this.GBot.onText(/outer wilds/i, (msg: any, match: any): void => {
+      const eotu: number = Math.floor(Math.random() * 16) + 1;
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/outer_wilds/outer_wilds' + eotu + '.gif');
     });
   }
 
