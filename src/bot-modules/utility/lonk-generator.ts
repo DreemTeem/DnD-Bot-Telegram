@@ -1,7 +1,7 @@
 import { Image, Canvas } from "canvas";
 
 export class LonkGenerator {
-    public static randomizeLonkImage(image: Image): Buffer {
+    public static randomizeLonkImage(image: Image, percent?: number): Buffer {
         const sideLength = image.width / 2;
         const canvas: Canvas = new Canvas(sideLength, sideLength);
         const ctx = canvas.getContext('2d');
@@ -18,7 +18,9 @@ export class LonkGenerator {
         }
 
         // Random number to determine if we add more scale and anger
-        const d100 = Math.floor(Math.random() * 100) + 1;
+        let d100 = Math.floor(Math.random() * 100) + 1;
+
+        d100 = percent ? percent : d100;
 
         if (d100 > 50) {
             const rand50 = Math.random();

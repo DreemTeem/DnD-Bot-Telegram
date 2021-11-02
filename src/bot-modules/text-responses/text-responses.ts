@@ -27,13 +27,19 @@ export class TextResponses {
     }, () => {
       this.setLonkResponses();
     });
+    this.loadCanvasImage(__dirname + '/../../../assets/suave/suonk.png').then((image: Image) => {
+      this.setSuaveResponses(image);
+    }, () => {
+      this.setSuaveResponses();
+    });
     this.setNekoparaDeanDidThisResponse();
     this.setRoarResponse();
     this.setShrugResponse();
     this.setPapaCResponse();
     this.setUnderstandableResponse();
-    this.setSuaveResponses();
     this.setOuterWildsResponses();
+    this.setOarthurWildsResponses();
+    this.setGotEmResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -198,10 +204,21 @@ export class TextResponses {
     });
   }
 
-  private setSuaveResponses(): void {
+  private setSuaveResponses(image?: Image): void {
     this.GBot.onText(/suave/i, (msg: any, match: any): void => {
-      const suave: number = Math.floor(Math.random() * 4) + 1;
-      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/suave/suave' + suave + '.gif');
+      const suave: number = Math.floor(Math.random() * 6) + 1;
+      if (suave < 5) {
+        this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/suave/suave' + suave + '.gif');
+      } else if (suave < 6) {
+        if (image) {
+            const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
+            this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
+        } else {
+            this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/lonk.jpg');
+        }
+      } else {
+        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suave_time.png');
+      }
     });
   }
 
@@ -209,6 +226,19 @@ export class TextResponses {
     this.GBot.onText(/outer wilds/i, (msg: any, match: any): void => {
       const eotu: number = Math.floor(Math.random() * 16) + 1;
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/outer_wilds/outer_wilds' + eotu + '.gif');
+    });
+  }
+
+  private setOarthurWildsResponses(): void {
+    this.GBot.onText(/oarth(u|e)r/i, (msg: any, match: any): void => {
+      const arther: number = Math.floor(Math.random() * 6) + 1;
+      this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/oarthur/oarthur' + arther + '.jpg');
+    });
+  }
+
+  private setGotEmResponses(): void {
+    this.GBot.onText(/go+t '?e+m+/i, (msg: any, match: any): void => {
+      this.GBot.sendMessage(msg.chat.id, 'Got \'em, Commander.');
     });
   }
 
