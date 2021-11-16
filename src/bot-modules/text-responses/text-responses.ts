@@ -3,12 +3,13 @@ import { Image } from 'canvas';
 import { GygaxResponses } from './gygax-responses';
 import { LonkGenerator } from '../utility/lonk-generator';
 import { GlobalHelpers } from '../utility/global-helpers';
+import TelegramBot = require('node-telegram-bot-api');
 
 export class TextResponses {
-  private GBot;
+  private GBot: TelegramBot;
   private lonkImg: Image;
 
-  constructor(botReference) {
+  constructor(botReference: TelegramBot) {
     this.GBot = botReference;
     this.setGaryGygaxResponses();
     this.setBasicYeetResponses();
@@ -18,6 +19,7 @@ export class TextResponses {
     this.setBirdUpResponses();
     this.setMalfestioResponses();
     this.setBlueCircuiResponses();
+    this.setFiendFireResponse();
     this.setNaniResponse();
     this.setKojimaResponses();
     this.setMyesResponses();
@@ -26,6 +28,11 @@ export class TextResponses {
       this.setLonkResponses(image);
     }, () => {
       this.setLonkResponses();
+    });
+    this.loadCanvasImage(__dirname + '/../../../assets/slonk_alpha.png').then((image: Image) => {
+      this.setSlonkResponses(image);
+    }, () => {
+      this.setSlonkResponses();
     });
     this.loadCanvasImage(__dirname + '/../../../assets/suave/suonk.png').then((image: Image) => {
       this.setSuaveResponses(image);
@@ -53,21 +60,21 @@ export class TextResponses {
   }
 
   private setGaryGygaxResponses(): void {
-    this.GBot.onText(/gary.+say/i, (msg: any, match: any): void => {
+    this.GBot.onText(/gary.+say/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, GygaxResponses[Math.floor(Math.random() * GygaxResponses.length)]);
     });
 
-    this.GBot.onText(/gary.+tell/i, (msg: any, match: any): void => {
+    this.GBot.onText(/gary.+tell/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, GygaxResponses[Math.floor(Math.random() * GygaxResponses.length)]);
     });
 
-    this.GBot.onText(/gary.+please/i, (msg: any, match: any): void => {
+    this.GBot.onText(/gary.+please/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, GygaxResponses[Math.floor(Math.random() * GygaxResponses.length)]);
     });
   }
 
   private setBasicYeetResponses(): void {
-    this.GBot.onText(/yee+t/i, (msg: any, match: any): void => {
+    this.GBot.onText(/yee+t/i, (msg: TelegramBot.Message, match: any): void => {
       const numMatches = msg.text.match(/(yee+t)/ig).length;
       let growthString: string = "Grows...";
       for (let i = 0; i < numMatches - 1; i++) {
@@ -78,7 +85,7 @@ export class TextResponses {
   }
 
   private setSlippyResponses(): void {
-    this.GBot.onText(/slippy ?i?'? ?s ?dead/i, (msg: any, match: any): void => {
+    this.GBot.onText(/slippy ?i?'? ?s ?dead/i, (msg: TelegramBot.Message, match: any): void => {
       // TODO switch back to old message if image is too intrusive for chat
       // this.GBot.sendMessage(msg.chat.id, '<i>N I C E</i>', { parse_mode: 'HTML', disable_web_page_preview: true });
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/nice.png');
@@ -86,67 +93,75 @@ export class TextResponses {
   }
 
   private setSneckoResponses(): void {
-    this.GBot.onText(/praise snecko/i, (msg: any, match: any): void => {
+    this.GBot.onText(/praise snecko/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', { caption: 'PRAISE SNECKO' });
     });
 
-    this.GBot.onText(/^\/snecko/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/snecko/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/snecko.jpg', { caption: 'PRAISE SNECKO' });
     });
   }
 
   private setStonksResponses(): void {
-    this.GBot.onText(/stonk/i, (msg: any, match: any): void => {
+    this.GBot.onText(/stonk/i, (msg: TelegramBot.Message, match: any): void => {
       const stonk: number = Math.floor(Math.random() * 4) + 1;
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/stonk' + stonk + '.mp4');
     });
   }
 
   private setBirdUpResponses(): void {
-    this.GBot.onText(/bird up/i, (msg: any, match: any): void => {
+    this.GBot.onText(/bird up/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/bird.gif');
     });
   }
 
   private setMalfestioResponses(): void {
-    this.GBot.onText(/\bm *o *t *h *s* *\b/i, (msg: any, match: any): void => {
+    this.GBot.onText(/\bm *o *t *h *s* *\b/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, msg.from.first_name + ', did you mean "Owl"?');
-      if (msg.from.id === 358426865) {
+      if (GlobalHelpers.isDerek(msg)) {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/derek_bird.jpg', { caption: '"Malfestio is a Bird Wyvern"\n - Monster Hunter Wiki' });
       }
     });
   }
 
   private setBlueCircuiResponses(): void {
-    this.GBot.onText(/\bp *u *r *p *l *e *\b/i, (msg: any, match: any): void => {
-      if (msg.from.id === 358426865) {
+    this.GBot.onText(/\bp *u *r *p *l *e *\b/i, (msg: TelegramBot.Message, match: any): void => {
+      if (GlobalHelpers.isDerek(msg)) {
         this.GBot.sendMessage(msg.chat.id, msg.from.first_name + ', did you mean "Blue"?');
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/derek_blue_circuits.jpg', { caption: '"The Processing Unit (or "blue circuit") is the third tier of circuit"\n - Factorio Wiki' });
       }
     });
   }
 
+  private setFiendFireResponse(): void {
+    this.GBot.onText(/faerie fire/i, (msg: TelegramBot.Message, match: any): void => {
+      if (GlobalHelpers.isDerek(msg)) {
+        this.GBot.sendMessage(msg.chat.id, msg.from.first_name + ', did you mean "Fiend Fire"?');
+      }
+    });
+  }
+
   private setNaniResponse(): void {
     const nani: string = 'Nani the fuck did you just fucking iimasu about watashi, you chiisai bitch desuka? Watashi\'ll have anata know that watashi graduated top of my class in Nihongo 3, and watashi\'ve been involved in iroirona Nihongo tutoring sessions, and watashi have over sanbyaku perfect test scores. Watashi am trained in kanji, and watashi is the top letter writer in all of southern California. Anata are nothing to watashi but just another weeaboo. Watashi will korosu anata the fuck out with vocabulary the likes of which has neber meen mimasu\'d before on this continent, mark watashino fucking words. Anata thinks that anata can get away with hanashimasing that kuso to watashi over the intaaneto? Omou again, fucker. As we hanashimasu, watashi am contacting watashino secret netto of otakus accross the USA, and anatano IP is being traced right now so you better junbishimasu for the ame, ujimushi. The ame that korosu\'s the pathetic chiisai thing anata calls anatano life. You\'re fucking shinimashita\'d, akachan.';
-    this.GBot.onText(/\bn *a *n *i *\b/i, (msg: any, match: any): void => {
+    this.GBot.onText(/\bn *a *n *i *\b/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, nani);
     });
   }
 
   private setKojimaResponses(): void {
-    this.GBot.onText(/^\/koj/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/koj/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/kojima.gif');
     });
   }
 
   private setMyesResponses(): void {
-    this.GBot.onText(/myes/i, (msg: any, match: any): void => {
+    this.GBot.onText(/myes/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/myes.gif');
     });
   }
 
   private setVeryCoolResponses(): void {
-    this.GBot.onText(/v+e+r+y+ coo+l+/i, (msg: any, match: any): void => {
+    this.GBot.onText(/v+e+r+y+ coo+l+/i, (msg: TelegramBot.Message, match: any): void => {
       const cool: number = Math.floor(Math.random() * 3) + 1;
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/very_cool/very_cool' + cool + '.gif');
     });
@@ -154,26 +169,39 @@ export class TextResponses {
 
   private setLonkResponses(image?: Image): void {
     if (image) {
-      this.GBot.onText(/lo+n+k/i, (msg: any, match: any): void => {
+      this.GBot.onText(/(?<!s)lo+n+k/i, (msg: TelegramBot.Message, match: any): void => {
         const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
         this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
       });
     } else {
-      this.GBot.onText(/lo+n+k/i, (msg: any, match: any): void => {
+      this.GBot.onText(/(?<!s)lo+n+k/i, (msg: TelegramBot.Message, match: any): void => {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/lonk.jpg');
       });
     }
   }
 
+  private setSlonkResponses(image?: Image): void {
+    if (image) {
+      this.GBot.onText(/slo+n+k/i, (msg: TelegramBot.Message, match: any): void => {
+        const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
+        this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
+      });
+    } else {
+      this.GBot.onText(/slo+n+k/i, (msg: TelegramBot.Message, match: any): void => {
+        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/slonk_alpha.jpg');
+      });
+    }
+  }
+
   private setNekoparaDeanDidThisResponse(): void {
-    this.GBot.onText(/heckachi|nekopara/i, (msg: any, match: any): void => {
+    this.GBot.onText(/heckachi|nekopara/i, (msg: TelegramBot.Message, match: any): void => {
       const neko: number = Math.floor(Math.random() * 9) + 1;
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/neko/neko' + neko + '.gif');
     });
   }
 
   private setRoarResponse(): void {
-    this.GBot.onText(/^\/roar/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/roar/i, (msg: TelegramBot.Message, match: any): void => {
       const roar: number = Math.floor(Math.random() * 10) + 1;
       if (roar >= 9) {
         this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/roar.mp4');
@@ -185,59 +213,67 @@ export class TextResponses {
   }
 
   private setShrugResponse(): void {
-    this.GBot.onText(/^\/shrug/i, (msg: any, match: any): void => {
-      // GlobalHelpers.deleteCommandMessage(this.GBot, msg);
+    this.GBot.onText(/^\/shrug/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, '¯\\_(ツ)_/¯');
     });
   }
 
   private setPapaCResponse(): void {
-    this.GBot.onText(/^\/papac/i, (msg: any, match: any): void => {
-      // GlobalHelpers.deleteCommandMessage(this.GBot, msg);
+    this.GBot.onText(/^\/papac/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, 'yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. yahahaaa Papa C. Zelda is dying Papa C.');
     });
   }
 
   private setUnderstandableResponse(): void {
-    this.GBot.onText(/^\/understandable/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/understandable/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/understandable.png');
     });
   }
 
   private setSuaveResponses(image?: Image): void {
-    this.GBot.onText(/suave/i, (msg: any, match: any): void => {
+    this.GBot.onText(/suave/i, (msg: TelegramBot.Message, match: any): void => {
       const suave: number = Math.floor(Math.random() * 6) + 1;
       if (suave < 5) {
         this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/suave/suave' + suave + '.gif');
       } else if (suave < 6) {
         if (image) {
-            const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
-            this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
+          const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
+          this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
         } else {
-            this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/lonk.jpg');
+          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suonk.jpg');
         }
       } else {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suave_time.png');
+      }
+
+    });
+
+    this.GBot.onText(/suonk/i, (msg: TelegramBot.Message, match: any): void => {
+      if (image) {
+        const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
+        this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
+      } else {
+        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suonk.jpg');
       }
     });
   }
 
   private setOuterWildsResponses(): void {
-    this.GBot.onText(/outer wilds/i, (msg: any, match: any): void => {
+    this.GBot.onText(/outer wilds/i, (msg: TelegramBot.Message, match: any): void => {
       const eotu: number = Math.floor(Math.random() * 16) + 1;
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/outer_wilds/outer_wilds' + eotu + '.gif');
     });
   }
 
   private setOarthurWildsResponses(): void {
-    this.GBot.onText(/o+a+r+t+h+(u+|e+)r+/i, (msg: any, match: any): void => {
+    this.GBot.onText(/o+a+r+t+h+(u+|e+)r+/i, (msg: TelegramBot.Message, match: any): void => {
       const arther: number = Math.floor(Math.random() * 8) + 1;
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/oarthur/oarthur' + arther + '.jpg');
     });
   }
 
   private setGotEmResponses(): void {
-    this.GBot.onText(/go+t '?e+m+/i, (msg: any, match: any): void => {
+    this.GBot.onText(/go+t '?e+m+/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, 'Got \'em, Commander.');
     });
   }

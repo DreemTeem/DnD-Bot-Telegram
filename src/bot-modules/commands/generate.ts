@@ -1,4 +1,4 @@
-const Bot = require('node-telegram-bot-api');
+import * as TelegramBot from 'node-telegram-bot-api';
 
 export class GeneratorCommandList {
   public static COMMANDS: any = {
@@ -16,24 +16,24 @@ export class GeneratorCommandList {
 }
 
 export class GenerateCommands {
-  private DnDBot;
+  private DnDBot: TelegramBot;
   private request = require("request");
   private cheerio = require("cheerio");
 
   private MAP_SEED_LENGTH: number = 6;
 
-  constructor(botReference) {
+  constructor(botReference: TelegramBot) {
     this.DnDBot = botReference;
     this.setGenerateCommand();
   }
 
   private setGenerateCommand(): void {
-    this.DnDBot.onText(/^\/(g)|^\/(generate)/i, (msg: any, match: any): void => {
-      this.runGenerateCommand(msg, match);
+    this.DnDBot.onText(/^\/(g)|^\/(generate)/i, (msg: TelegramBot.Message): void => {
+      this.runGenerateCommand(msg);
     });
   }
 
-  private runGenerateCommand(msg: any, match: any): void {
+  private runGenerateCommand(msg: TelegramBot.Message): void {
     const commandArray: string[] = msg.text.split(" ");
     const verbose: boolean = msg.text.indexOf(" -v") > 0;
     if (commandArray[0] === "/g" || commandArray[0] === "/generate") {

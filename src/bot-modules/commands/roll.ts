@@ -1,4 +1,5 @@
 import { Canvas } from "canvas";
+import * as TelegramBot from 'node-telegram-bot-api';
 import { DiceImageGenerator } from "../utility/dice-image-generator";
 
 const Bot = require('node-telegram-bot-api');
@@ -11,15 +12,15 @@ export interface RollResult {
 }
 
 export class RollCommands {
-  private GBot;
+  private GBot: TelegramBot;
 
-  constructor(botReference) {
+  constructor(botReference: TelegramBot) {
     this.GBot = botReference;
     this.setRollCommand();
   }
 
   private setRollCommand(): void {
-    this.GBot.onText(/^\/roll/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/roll/i, (msg: TelegramBot.Message): void => {
 
       const commandArray: string[] = msg.text.split(" ");
       const verbose: boolean = msg.text.includes(" -v");
@@ -50,7 +51,7 @@ export class RollCommands {
       }
     });
 
-    this.GBot.onText(/^\/flip/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/flip/i, (msg: TelegramBot.Message): void => {
       const result = Math.floor(Math.random() * 2) + 1;
       if (result === 1) {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/heads.png', { caption: 'Heads' });

@@ -1,4 +1,4 @@
-const Bot = require('node-telegram-bot-api');
+import TelegramBot = require('node-telegram-bot-api');
 import { GeneratorCommandList } from './generate';
 
 export class BaseCommandList {
@@ -23,17 +23,17 @@ export class BaseCommandList {
 }
 
 export class HelpCommands {
-  private DnDBot;
+  private DnDBot: TelegramBot;
   private request = require("request");
   private cheerio = require("cheerio");
 
-  constructor(botReference) {
+  constructor(botReference: TelegramBot) {
     this.DnDBot = botReference;
     this.setHelpCommand();
   }
 
   private setHelpCommand(): void {
-    this.DnDBot.onText(/^\/(h)|^\/(help)/i, (msg: any, match: any): void => {
+    this.DnDBot.onText(/^\/(h)|^\/(help)/i, (msg: TelegramBot.Message): void => {
       const commandArray: string[] = msg.text.split(" ");
       // TODO: Is this necessary anymore? Run tests to see if the updated REGEX covered the if statement
       if (commandArray[0] === "/h" || commandArray[0] === "/help") {

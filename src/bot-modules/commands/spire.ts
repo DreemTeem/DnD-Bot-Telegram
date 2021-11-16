@@ -1,18 +1,17 @@
+import * as TelegramBot from 'node-telegram-bot-api';
 import { SpireChallenges } from "../data-assets/spire-challenges";
 import { CustomChallenges } from "../data-assets/spire-challenges/custom";
 
-const Bot = require('node-telegram-bot-api');
-
 export class SpireCommands {
-  private GBot;
+  private GBot: TelegramBot;
 
-  constructor(botReference) {
+  constructor(botReference: TelegramBot) {
     this.GBot = botReference;
     this.setSpireCommand();
   }
 
   private setSpireCommand(): void {
-    this.GBot.onText(/^\/spire/i, (msg: any, match: any): void => {
+    this.GBot.onText(/^\/spire/i, (msg: TelegramBot.Message): void => {
       const commandArray: string[] = msg.text.split(' ');
       const challengeIndex = commandArray.indexOf('-c');
       const genericChallengeIndex = commandArray.indexOf('-gc');

@@ -1,8 +1,10 @@
 {
-    "compilerOptions": {
-    "outDir": "./output"
-    },
-    "inclue": ["./src/*"],
-    "exclude": []
-  }
-  
+  "compilerOptions": {
+    "outDir": "./output",
+    "typeRoots": ["node_modules/@types"]
+  },
+  "inclue": [
+    "./src/*"
+  ],
+  "exclude": []
+}

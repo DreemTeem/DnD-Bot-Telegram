@@ -1,11 +1,13 @@
+import * as TelegramBot from 'node-telegram-bot-api';
+
 const Bot = require('node-telegram-bot-api');
 
 export class DnDCommands {
-  private DnDBot;
+  private DnDBot: TelegramBot;
   private request = require("request");
   private cheerio = require("cheerio");
 
-  constructor(botReference) {
+  constructor(botReference: TelegramBot) {
     this.DnDBot = botReference;
     this.setDnDCommand();
     this.setSpellCommand();
@@ -21,7 +23,7 @@ export class DnDCommands {
    * the user is presented with a generic error.
    */
   private setDnDCommand(): void {
-    this.DnDBot.onText(/^\/dnd/i, (msg: any, match: any): void => {
+    this.DnDBot.onText(/^\/dnd/i, (msg: TelegramBot.Message): void => {
       const commandArray: string[] = msg.text.split(" ");
       if (commandArray.length === 1) {
         this.getGenericResponse(msg.chat.id);
@@ -41,7 +43,7 @@ export class DnDCommands {
    * the user is presented with a generic error.
    */
   private setSpellCommand(): void {
-    this.DnDBot.onText(/^\/spells/i, (msg: any, match: any): void => {
+    this.DnDBot.onText(/^\/spells/i, (msg: TelegramBot.Message): void => {
       const commandArray: string[] = msg.text.split(" ");
       if (commandArray.length === 1) {
         this.getGenericResponse(msg.chat.id);
