@@ -47,6 +47,7 @@ export class TextResponses {
     this.setOuterWildsResponses();
     this.setOarthurWildsResponses();
     this.setGotEmResponses();
+    this.setWTFResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -275,6 +276,12 @@ export class TextResponses {
   private setGotEmResponses(): void {
     this.GBot.onText(/go+t '?e+m+/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, 'Got \'em, Commander.');
+    });
+  }
+
+  private setWTFResponses(): void {
+    this.GBot.onText(/\/wtf/i, (msg: TelegramBot.Message, match: any): void => {
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/wtf/wtf' + '.gif');
     });
   }
 

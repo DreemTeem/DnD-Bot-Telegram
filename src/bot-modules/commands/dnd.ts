@@ -1,4 +1,5 @@
 import * as TelegramBot from 'node-telegram-bot-api';
+import { PotionGenerator } from '../utility/potion-generator';
 
 const Bot = require('node-telegram-bot-api');
 
@@ -11,6 +12,7 @@ export class DnDCommands {
     this.DnDBot = botReference;
     this.setDnDCommand();
     this.setSpellCommand();
+    this.setPotionCommand();
   }
 
   // TODO: Add integration for the following sites:
@@ -182,5 +184,15 @@ export class DnDCommands {
    */
   private getNoResultsResponse(messageId: number, searchQuery: string): void {
     this.DnDBot.sendMessage(messageId, "No search results found with the query \"" + searchQuery + "\". Please try to refine or change your search.", { parse_mode: "HTML", disable_web_page_preview: true });
+  }
+
+  /**
+   * Basic setup function to wrap the potion generator command.
+   */
+   private setPotionCommand(): void {
+    this.DnDBot.onText(/^\/potion/i, (msg: TelegramBot.Message): void => {
+      const potionResponse: string = PotionGenerator.generatePotionString();
+      this.DnDBot.sendMessage(msg.chat.id, potionResponse);
+    });
   }
 }
