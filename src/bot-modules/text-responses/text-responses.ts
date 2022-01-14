@@ -29,6 +29,15 @@ export class TextResponses {
     }, () => {
       this.setLonkResponses();
     });
+    this.loadCanvasImage(__dirname + '/../../../assets/lunk.png').then((image: Image) => {
+      this.loadCanvasImage(__dirname + '/../../../assets/lunk_smile.png').then((image2: Image) => {
+        this.setLunkResponses(image, image2);
+      }, () => {
+        this.setLunkResponses();
+      });
+    }, () => {
+      this.setLunkResponses();
+    });
     this.loadCanvasImage(__dirname + '/../../../assets/slonk_alpha.png').then((image: Image) => {
       this.setSlonkResponses(image);
     }, () => {
@@ -177,6 +186,20 @@ export class TextResponses {
     } else {
       this.GBot.onText(/(?<!s)lo+n+k/i, (msg: TelegramBot.Message, match: any): void => {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/lonk.jpg');
+      });
+    }
+  }
+
+  private setLunkResponses(image?: Image, image2?: Image): void {
+    if (image) {
+      this.GBot.onText(/(?<!s)lu+n+k/i, (msg: TelegramBot.Message, match: any): void => {
+        const smile: number = Math.floor(Math.random() * 10) + 1;
+        const randomizedLonk: Buffer = smile === 10 ? LonkGenerator.randomizeLonkImage(image2) : LonkGenerator.randomizeLonkImage(image);
+        this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
+      });
+    } else {
+      this.GBot.onText(/(?<!s)lu+n+k/i, (msg: TelegramBot.Message, match: any): void => {
+        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/lunk.jpg');
       });
     }
   }
