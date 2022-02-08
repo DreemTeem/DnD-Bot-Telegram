@@ -291,7 +291,7 @@ export class TextResponses {
 
   private setOarthurWildsResponses(): void {
     this.GBot.onText(/o+a+r+t+h+(u+|e+)r+/i, (msg: TelegramBot.Message, match: any): void => {
-      const arther: number = Math.floor(Math.random() * 8) + 1;
+      const arther: number = Math.floor(Math.random() * 11) + 1;
       this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/oarthur/oarthur' + arther + '.jpg');
     });
   }
