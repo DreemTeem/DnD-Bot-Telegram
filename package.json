@@ -1,6 +1,9 @@
 {
   "name": "gygax-bot-telegram",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.x"
+  },
   "private": true,
   "description": "Telegram Bot meant to assist in various ways- focusing on helper commands for Dungeons and Dragons.",
   "main": "index.js",
