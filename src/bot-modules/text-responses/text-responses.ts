@@ -1,9 +1,10 @@
 const Bot = require('node-telegram-bot-api');
-import { Image } from 'canvas';
+import { Canvas, Image } from 'canvas';
 import { GygaxResponses } from './gygax-responses';
 import { LonkGenerator } from '../utility/lonk-generator';
 import { GlobalHelpers } from '../utility/global-helpers';
 import TelegramBot = require('node-telegram-bot-api');
+import { ManhattanGenerator } from '../utility/manhattan-generator';
 
 export class TextResponses {
   private GBot: TelegramBot;
@@ -57,6 +58,7 @@ export class TextResponses {
     this.setOarthurWildsResponses();
     this.setGotEmResponses();
     this.setWTFResponses();
+    this.setManhattanResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -305,6 +307,16 @@ export class TextResponses {
   private setWTFResponses(): void {
     this.GBot.onText(/\/wtf/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/wtf/wtf' + '.gif');
+    });
+  }
+
+  private setManhattanResponses(): void {
+    this.GBot.onText(/\/5m/i, (msg: TelegramBot.Message, match: any): void => {
+      ManhattanGenerator.getManhattanImage().then((canvas: Canvas) => {
+        this.GBot.sendPhoto(msg.chat.id, canvas.toBuffer(), { caption: 'A PACT IS STRUCK' });
+      }, () => {
+        this.GBot.sendMessage(msg.chat.id, 'DRINK 5 MANHATTANS');
+      });
     });
   }
 
