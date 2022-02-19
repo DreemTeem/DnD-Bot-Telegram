@@ -1,5 +1,4 @@
 import { Canvas, Image } from 'canvas';
-import { RollResult } from '../commands/roll';
 
 export class ManhattanGenerator {
     private static drinkImages: Image[] = [];
