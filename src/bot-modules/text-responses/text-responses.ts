@@ -5,6 +5,7 @@ import { LonkGenerator } from '../utility/lonk-generator';
 import { GlobalHelpers } from '../utility/global-helpers';
 import TelegramBot = require('node-telegram-bot-api');
 import { ManhattanGenerator } from '../utility/manhattan-generator';
+import { YoutubeParser } from '../utility/youtube-parser';
 
 export class TextResponses {
   private GBot: TelegramBot;
@@ -59,6 +60,7 @@ export class TextResponses {
     this.setGotEmResponses();
     this.setWTFResponses();
     this.setManhattanResponses();
+    this.setSsethResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -317,6 +319,16 @@ export class TextResponses {
       }, () => {
         this.GBot.sendMessage(msg.chat.id, 'DRINK 5 MANHATTANS');
       });
+    });
+  }
+
+  private setSsethResponses(): void {
+    this.GBot.onText(/\/sseth/i, (msg: TelegramBot.Message, match: any): void => {
+      YoutubeParser.getLatestYoutubeVideo('https://www.youtube.com/c/SsethTzeentach/videos').then((videoId: string) => {
+        this.GBot.sendMessage(msg.chat.id, '🚨🤡🇮🇱✡️🤡🚨 SSETH TZEENTACH ALERT 🚨🤡🇮🇱✡️🤡🚨 \n\n' + 'https://www.youtube.com/watch?v='+videoId +'\n\n🚨🤡🇮🇱✡️🤡🚨 SSETH TZEENTACH ALERT 🚨🤡🇮🇱✡️🤡🚨');
+      }, (err) => {
+        console.log(err);
+      })
     });
   }
 

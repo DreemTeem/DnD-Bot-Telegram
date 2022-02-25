@@ -18,17 +18,18 @@
   "author": "Volodymyr Lut",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^12.12.7",
-    "@types/node-telegram-bot-api": "^0.53.2",
-    "body-parser": "^1.15.0",
-    "canvas": "^2.6.1",
-    "cheerio": "^1.0.0-rc.3",
+    "@types/node": "^12.20.46",
+    "@types/node-telegram-bot-api": "^0.53.6",
+    "body-parser": "^1.19.2",
+    "canvas": "^2.9.0",
+    "cheerio": "^1.0.0-rc.10",
     "dotenv": "^4.0.0",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
+    "googleapis": "^95.0.0",
     "node-telegram-bot-api": "^0.50.0",
-    "rimraf": "^3.0.1",
-    "scryfall-sdk": "^1.5.1",
-    "typescript": "^3.7.2"
+    "rimraf": "^3.0.2",
+    "scryfall-sdk": "^1.6.4",
+    "typescript": "^3.9.10"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
