@@ -61,6 +61,7 @@ export class TextResponses {
     this.setWTFResponses();
     this.setManhattanResponses();
     this.setSsethResponses();
+    this.setDishonorResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -329,6 +330,12 @@ export class TextResponses {
       }, (err) => {
         console.log(err);
       })
+    });
+  }
+
+  private setDishonorResponses(): void {
+    this.GBot.onText(/\/dis/i, (msg: TelegramBot.Message, match: any): void => {
+      this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/dishonor.gif');
     });
   }
 
