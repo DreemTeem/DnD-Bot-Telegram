@@ -267,8 +267,10 @@ export class TextResponses {
       } else if (suave < 6) {
         if (image) {
           const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
+          console.log('Hmm', randomizedLonk);
           this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
         } else {
+          console.log('Ummmm');
           this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suonk.png');
         }
       } else {
@@ -280,8 +282,10 @@ export class TextResponses {
     this.GBot.onText(/suonk/i, (msg: TelegramBot.Message, match: any): void => {
       if (image) {
         const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
+        console.log('Hmm2', randomizedLonk);
         this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
       } else {
+        console.log('Ummmm2');
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suonk.png');
       }
     });
