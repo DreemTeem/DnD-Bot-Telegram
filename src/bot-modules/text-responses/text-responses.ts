@@ -45,7 +45,7 @@ export class TextResponses {
     }, () => {
       this.setSlonkResponses();
     });
-    this.loadCanvasImage(__dirname + '/../../../assets/suave/suonk.png').then((image: Image) => {
+    this.loadCanvasImage(__dirname + '/../../../assets/suave/suonk.PNG').then((image: Image) => {
       this.setSuaveResponses(image);
     }, () => {
       this.setSuaveResponses();
@@ -271,7 +271,7 @@ export class TextResponses {
           this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
         } else {
           console.log('Ummmm');
-          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suonk.png');
+          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suonk.PNG');
         }
       } else {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suave_time.png');
@@ -286,7 +286,7 @@ export class TextResponses {
         this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
       } else {
         console.log('Ummmm2');
-        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suonk.png');
+        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suonk.PNG');
       }
     });
   }
