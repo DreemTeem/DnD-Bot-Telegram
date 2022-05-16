@@ -269,7 +269,7 @@ export class TextResponses {
           const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
           this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
         } else {
-          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suonk.jpg');
+          this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suonk.png');
         }
       } else {
         this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suave_time.png');
@@ -282,7 +282,7 @@ export class TextResponses {
         const randomizedLonk: Buffer = LonkGenerator.randomizeLonkImage(image);
         this.GBot.sendPhoto(msg.chat.id, randomizedLonk);
       } else {
-        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suonk.jpg');
+        this.GBot.sendPhoto(msg.chat.id, __dirname + '/../../../assets/suave/suonk.png');
       }
     });
   }
