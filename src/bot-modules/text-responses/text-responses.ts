@@ -62,6 +62,7 @@ export class TextResponses {
     this.setManhattanResponses();
     this.setSsethResponses();
     this.setDishonorResponses();
+    this.setEthanResponses();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -336,6 +337,12 @@ export class TextResponses {
   private setDishonorResponses(): void {
     this.GBot.onText(/\/dis/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/dishonor.gif');
+    });
+  }
+
+  private setEthanResponses(): void {
+    this.GBot.onText(/ethan/i, (msg: TelegramBot.Message, match: any): void => {
+      this.GBot.sendMessage(msg.chat.id, 'Yo FUCK Ethan');
     });
   }
 
