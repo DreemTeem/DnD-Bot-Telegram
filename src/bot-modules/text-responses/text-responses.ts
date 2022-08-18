@@ -63,6 +63,7 @@ export class TextResponses {
     this.setSsethResponses();
     this.setDishonorResponses();
     this.setEthanResponses();
+    this.setNoYaNotResponse();
   }
 
   private loadCanvasImage(url: string): Promise<Image> {
@@ -343,6 +344,15 @@ export class TextResponses {
   private setEthanResponses(): void {
     this.GBot.onText(/ethan/i, (msg: TelegramBot.Message, match: any): void => {
       this.GBot.sendMessage(msg.chat.id, 'Yo FUCK Ethan');
+    });
+  }
+
+  private setNoYaNotResponse(): void {
+    this.GBot.onText(/i am|i\'m/i, (msg: TelegramBot.Message, match: any): void => {
+      const chance: number = Math.floor(Math.random() * 100) + 1;
+      if (chance > 50) {
+        this.GBot.sendDocument(msg.chat.id, __dirname + '/../../../assets/no ya not.gif');
+      }
     });
   }
 
