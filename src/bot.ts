@@ -8,6 +8,7 @@ import { HelpCommands } from './bot-modules/commands/help';
 import { MTGSearch } from './bot-modules/commands/mtg-search';
 import { SpireCommands } from './bot-modules/commands/spire';
 import TelegramBot = require('node-telegram-bot-api');
+import { RoRCommands } from './bot-modules/commands/ror';
 
 let bot;
 
@@ -29,6 +30,7 @@ new GenerateCommands(bot);
 new HelpCommands(bot);
 new MTGSearch(bot);
 new SpireCommands(bot);
+new RoRCommands(bot);
 
 bot.on("polling_error", (err) => {
   // Muting double error when running locally
